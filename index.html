@@ -839,6 +839,36 @@
       accent-color:#ff5da8;
     }
 
+
+    .uploadGlobalBox{
+      margin:10px 0 14px;
+      padding:12px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .uploadGlobalBox.hidden{display:none}
+    .uploadGlobalText{
+      color:var(--muted);
+      font-weight:900;
+      margin-bottom:8px;
+      line-height:1.6;
+    }
+    .uploadGlobalBar{
+      height:14px;
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .uploadGlobalBar span{
+      display:block;
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, var(--gold), var(--pink));
+      transition:.18s ease;
+    }
+
     .toast{
       position:fixed;
       left:50%;
@@ -966,6 +996,11 @@
       <div id="adminDashboard" class="hidden">
         <div class="statusDot ok" id="adminCloudStatus">السحابة مفعلة</div>
         <div class="currentUserBadge" id="adminInfoBadge">مدير</div>
+
+        <div class="uploadGlobalBox hidden" id="uploadGlobalBox">
+          <div class="uploadGlobalText" id="uploadGlobalText">جاري الرفع...</div>
+          <div class="uploadGlobalBar"><span id="uploadGlobalFill"></span></div>
+        </div>
 
         <div class="adminTabs" id="adminTabs"></div>
 
@@ -1322,7 +1357,7 @@
     import {
       getStorage,
       ref as storageRef,
-      uploadBytes,
+      uploadBytesResumable,
       getDownloadURL,
       deleteObject
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
@@ -2029,7 +2064,11 @@
       }
 
       try{
-        showToast(`جاري رفع ${item.label}...`);
+        if(file.size > 80 * 1024 * 1024){
+          showToast("الفيديو كبير، الرفع ممكن يطول. انتظر لين توصل النسبة 100%");
+        }else{
+          showToast(`جاري رفع ${item.label}...`);
+        }
         if(mediaSettings[kind]?.path) await safeDeleteStorage(mediaSettings[kind].path);
 
         const uploaded = await uploadFileToStorage(file, item.folder);
@@ -2066,7 +2105,11 @@
       let video = existing?.video || null;
 
       if(file){
-        showToast("جاري رفع الفيديو...");
+        if(file.size > 80 * 1024 * 1024){
+          showToast("الفيديو كبير، الرفع ممكن يطول. انتظر لين توصل النسبة 100%");
+        }else{
+          showToast("جاري رفع الفيديو...");
+        }
         if(video?.path) await safeDeleteStorage(video.path);
         video = await uploadFileToStorage(file, "love_videos");
       }
@@ -2474,11 +2517,32 @@
 
     async function uploadFileToStorage(file, folder){
       if(!storage) throw new Error("Storage not ready");
+
       const safeName = file.name.replace(/[^\w.\-\u0600-\u06FF]/g, "_");
       const path = `${folder}/${Date.now()}_${safeName}`;
       const ref = storageRef(storage, path);
-      await uploadBytes(ref, file, { contentType:file.type || "application/octet-stream" });
+
+      setUploadProgress(0, `بدء رفع ${file.name}...`);
+
+      const task = uploadBytesResumable(ref, file, {
+        contentType:file.type || "application/octet-stream",
+        cacheControl:"public,max-age=31536000"
+      });
+
+      await new Promise((resolve, reject) => {
+        task.on("state_changed", (snapshot) => {
+          const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          const mbDone = (snapshot.bytesTransferred / 1024 / 1024).toFixed(1);
+          const mbTotal = (snapshot.totalBytes / 1024 / 1024).toFixed(1);
+          setUploadProgress(percent, `جاري رفع ${file.name}: ${percent}% — ${mbDone}MB من ${mbTotal}MB`);
+        }, reject, resolve);
+      });
+
       const url = await getDownloadURL(ref);
+      setUploadProgress(100, "تم الرفع، جاري حفظ البيانات...");
+
+      setTimeout(() => hideUploadProgress(), 1400);
+
       return {
         url,
         path,
@@ -2487,6 +2551,26 @@
         size:file.size,
         uploadedAtText:new Date().toLocaleString("ar-SA")
       };
+    }
+
+    function setUploadProgress(percent, text){
+      const box = qs("uploadGlobalBox");
+      const fill = qs("uploadGlobalFill");
+      const label = qs("uploadGlobalText");
+
+      if(!box || !fill || !label) return;
+
+      box.classList.remove("hidden");
+      fill.style.width = Math.max(0, Math.min(100, percent)) + "%";
+      label.textContent = text || `جاري الرفع ${percent}%`;
+    }
+
+    function hideUploadProgress(){
+      const box = qs("uploadGlobalBox");
+      const fill = qs("uploadGlobalFill");
+      if(!box || !fill) return;
+      box.classList.add("hidden");
+      fill.style.width = "0%";
     }
 
     async function safeDeleteStorage(path){
