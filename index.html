@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>يوري ❤️ من سيف</title>
+
+  <!-- غيّر الوصف والصورة لو رفعت الموقع -->
+  <meta name="description" content="تهنئة واعتذار رومانسي من سيف إلى يوري" />
+  <meta property="og:title" content="حبيبتي يوري ❤️ من سيف" />
+  <meta property="og:description" content="رسالة عيد واعتذار وحب" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#220015;
+      --bg2:#450027;
+      --pink:#ff5da8;
+      --pink2:#ff9ac8;
+      --gold:#ffd777;
+      --white:#fff7fb;
+      --muted:#ffddea;
+      --glass:rgba(255,255,255,.12);
+      --glass2:rgba(255,255,255,.18);
+      --shadow:0 22px 60px rgba(0,0,0,.35);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Tajawal", system-ui, sans-serif;
+      color:var(--white);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,93,168,.45), transparent 28%),
+        radial-gradient(circle at 90% 18%, rgba(255,215,119,.25), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(255,93,168,.28), transparent 30%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 45%, #17000d);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1.5px);
+      background-size:28px 28px;
+      opacity:.18;
+      mask-image:linear-gradient(to bottom, #000, transparent 82%);
+      z-index:0;
+    }
+
+    .hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:1;
+    }
+    .heart{
+      position:absolute;
+      bottom:-60px;
+      width:22px;
+      height:22px;
+      background:rgba(255,93,168,.55);
+      transform:rotate(45deg);
+      animation:floatUp linear infinite;
+      filter:drop-shadow(0 0 18px rgba(255,93,168,.5));
+      border-radius:5px;
+    }
+    .heart::before,.heart::after{
+      content:"";
+      position:absolute;
+      width:22px;
+      height:22px;
+      background:inherit;
+      border-radius:50%;
+    }
+    .heart::before{left:-11px;top:0}
+    .heart::after{left:0;top:-11px}
+    @keyframes floatUp{
+      to{transform:translateY(-120vh) rotate(45deg);opacity:0}
+    }
+
+    .wrap{
+      position:relative;
+      z-index:2;
+      width:min(1120px, calc(100% - 28px));
+      margin:auto;
+    }
+
+    header{
+      position:sticky;
+      top:10px;
+      z-index:20;
+      margin-top:10px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(54,0,33,.55);
+      backdrop-filter:blur(18px);
+      border-radius:999px;
+      box-shadow:0 10px 28px rgba(0,0,0,.22);
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .logo{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--pink), var(--gold));
+      box-shadow:0 0 25px rgba(255,93,168,.55);
+      color:#3a001f;
+      font-size:23px;
+    }
+
+    nav{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    nav a{
+      color:var(--white);
+      text-decoration:none;
+      font-size:14px;
+      font-weight:700;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    nav a:hover{background:rgba(255,255,255,.18)}
+
+    section{
+      min-height:auto;
+      padding:54px 0;
+    }
+
+    .hero{
+      min-height:calc(100vh - 74px);
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:28px;
+      align-items:center;
+      padding:52px 0 40px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.07));
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+    }
+
+    .heroText{
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+    }
+    .heroText::after{
+      content:"عيد سعيد يا يوري";
+      position:absolute;
+      left:-30px;
+      bottom:10px;
+      font-size:74px;
+      font-weight:900;
+      color:rgba(255,255,255,.045);
+      white-space:nowrap;
+      transform:rotate(-6deg);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.14);
+      padding:9px 14px;
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:800;
+      margin-bottom:15px;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(38px, 7vw, 82px);
+      line-height:1.05;
+      font-weight:900;
+    }
+    h1 span{
+      background:linear-gradient(90deg, var(--gold), var(--pink2), #fff);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{
+      color:var(--muted);
+      font-size:clamp(18px, 2vw, 23px);
+      line-height:1.9;
+      margin:20px 0 26px;
+      font-weight:600;
+      max-width:760px;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+    button,.btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      text-decoration:none;
+      font-family:inherit;
+      border-radius:999px;
+      padding:14px 20px;
+      font-size:16px;
+      font-weight:900;
+      color:#3a001f;
+      background:linear-gradient(135deg, var(--gold), #fff0b8);
+      box-shadow:0 14px 28px rgba(255,215,119,.2);
+      transition:.2s ease;
+    }
+    button:hover,.btn:hover{transform:translateY(-2px)}
+    .btnSecondary{
+      color:var(--white);
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:none;
+    }
+
+    .phone{
+      position:relative;
+      padding:16px;
+      border-radius:38px;
+      background:linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.2);
+      box-shadow:var(--shadow);
+      transform:rotate(-2deg);
+    }
+    .phoneInner{
+      min-height:560px;
+      border-radius:30px;
+      overflow:hidden;
+      background:
+        linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.2)),
+        radial-gradient(circle at 50% 20%, rgba(255,215,119,.35), transparent 35%),
+        linear-gradient(160deg, #5e0037, #230014);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:24px;
+      position:relative;
+    }
+    .moon{
+      width:112px;
+      height:112px;
+      border-radius:50%;
+      background:radial-gradient(circle at 35% 32%, #fff9cf, #ffd777 55%, #f49b5d);
+      box-shadow:0 0 80px rgba(255,215,119,.55);
+      margin-bottom:18px;
+    }
+    .phoneInner h2{
+      margin:0;
+      font-size:34px;
+      font-weight:900;
+    }
+    .phoneInner p{
+      color:var(--muted);
+      line-height:1.8;
+      font-weight:700;
+    }
+    .spark{
+      position:absolute;
+      width:9px;height:9px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 0 18px #fff;
+      animation:twinkle 1.7s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle{to{opacity:.25;transform:scale(.6)}}
+
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:20px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size:clamp(27px,4vw,45px);
+      font-weight:900;
+    }
+    .sectionHead p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.7;
+    }
+
+    .videoBox{
+      padding:18px;
+    }
+    video{
+      width:100%;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.16);
+      background:#13000b;
+      display:block;
+      max-height:680px;
+      object-fit:cover;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+    }
+    .memory{
+      padding:14px;
+      overflow:hidden;
+    }
+    .memory video{
+      aspect-ratio:9/14;
+      max-height:520px;
+      object-fit:cover;
+    }
+    .memory h3{
+      margin:12px 4px 4px;
+      font-size:19px;
+      font-weight:900;
+    }
+    .memory p{
+      margin:0 4px 4px;
+      color:var(--muted);
+      line-height:1.7;
+      font-weight:700;
+    }
+
+    .apology{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .letter{
+      padding:26px;
+    }
+    .letter h2{
+      margin:0 0 14px;
+      font-size:clamp(30px,4vw,50px);
+      font-weight:900;
+      color:#fff;
+    }
+    .letter p{
+      font-size:19px;
+      line-height:2;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .quote{
+      margin-top:18px;
+      padding:18px;
+      border-radius:22px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff;
+      font-weight:900;
+      line-height:1.9;
+    }
+
+    .musicPanel{
+      padding:26px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:16px;
+      text-align:center;
+    }
+    .disc{
+      width:180px;
+      height:180px;
+      margin:0 auto;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at center, #210012 0 13%, #ffd777 14% 20%, transparent 21%),
+        conic-gradient(from 30deg, #ff5da8, #ffd777, #ffffff, #ff5da8, #57103a, #ff5da8);
+      box-shadow:0 0 70px rgba(255,93,168,.38);
+      animation:spin 7s linear infinite;
+      animation-play-state:paused;
+    }
+    .disc.playing{animation-play-state:running}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    audio{
+      width:100%;
+      max-width:520px;
+      margin:auto;
+      filter:drop-shadow(0 12px 20px rgba(0,0,0,.18));
+    }
+
+    .choice{
+      margin-top:18px;
+      padding:24px;
+      text-align:center;
+    }
+    .choice h2{margin:0 0 12px;font-size:34px}
+    .choiceResult{
+      margin-top:14px;
+      color:var(--muted);
+      font-weight:900;
+      font-size:20px;
+      min-height:36px;
+      line-height:1.8;
+    }
+    .noBtn{
+      color:#fff;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:none;
+    }
+
+    .questionsLayout{
+      display:grid;
+      grid-template-columns:330px 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    .questionList{
+      padding:18px;
+      max-height:640px;
+      overflow:auto;
+    }
+    .qMini{
+      width:100%;
+      text-align:right;
+      margin-bottom:9px;
+      color:#fff;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:none;
+      border-radius:18px;
+      padding:12px 14px;
+      line-height:1.5;
+      font-size:14px;
+    }
+    .qMini.active{
+      background:linear-gradient(135deg, rgba(255,215,119,.28), rgba(255,93,168,.24));
+      border-color:rgba(255,215,119,.35);
+    }
+
+    .questionStage{
+      padding:18px;
+    }
+    .snapCard{
+      min-height:470px;
+      padding:28px;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255,215,119,.35), transparent 25%),
+        radial-gradient(circle at 85% 0%, rgba(255,93,168,.36), transparent 28%),
+        linear-gradient(145deg, #4b002c, #250015 70%);
+      border:1px solid rgba(255,255,255,.18);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+    .snapCard::after{
+      content:"يوري × سيف";
+      position:absolute;
+      left:18px;
+      bottom:8px;
+      font-size:62px;
+      font-weight:900;
+      color:rgba(255,255,255,.045);
+      transform:rotate(-8deg);
+    }
+    .snapTop{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      position:relative;
+      z-index:1;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 13px;
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:900;
+    }
+    .questionText{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      font-size:clamp(30px, 5vw, 56px);
+      line-height:1.45;
+      font-weight:900;
+      margin:40px 0;
+      text-shadow:0 8px 25px rgba(0,0,0,.24);
+    }
+    .snapFooter{
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:end;
+      color:var(--muted);
+      font-weight:800;
+      line-height:1.7;
+    }
+    .snapHint{
+      max-width:360px;
+    }
+
+    .qControls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+      justify-content:center;
+    }
+    .smallBtn{
+      padding:12px 15px;
+      font-size:15px;
+    }
+
+
+    .adminBox{
+      padding:24px;
+    }
+    .adminLogin{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:16px 0;
+    }
+    .adminLogin input{
+      flex:1;
+      min-width:220px;
+      border:1px solid rgba(255,255,255,.18);
+      outline:0;
+      border-radius:999px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.1);
+      color:#fff;
+      font-family:inherit;
+      font-size:16px;
+      font-weight:800;
+    }
+    .adminLogin input::placeholder{color:rgba(255,255,255,.65)}
+    .resultCard{
+      margin-top:14px;
+      padding:16px;
+      border-radius:22px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.13);
+      line-height:1.9;
+      font-weight:800;
+    }
+    .resultCard b{color:var(--gold)}
+    .statusDot{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 13px;
+      border-radius:999px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.13);
+      color:var(--muted);
+      font-weight:900;
+    }
+    .statusDot::before{
+      content:"";
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:#ff5d7d;
+      box-shadow:0 0 12px #ff5d7d;
+    }
+    .statusDot.ok::before{
+      background:#7dffb2;
+      box-shadow:0 0 12px #7dffb2;
+    }
+
+    .footer{
+      text-align:center;
+      padding:30px 0 50px;
+      color:var(--muted);
+      font-weight:800;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:24px;
+      transform:translateX(-50%) translateY(120px);
+      opacity:0;
+      z-index:100;
+      background:rgba(34,0,21,.86);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      padding:13px 18px;
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      transition:.25s ease;
+      font-weight:900;
+      text-align:center;
+    }
+    .toast.show{
+      transform:translateX(-50%) translateY(0);
+      opacity:1;
+    }
+
+    .confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:99;
+      overflow:hidden;
+    }
+    .confetti span{
+      position:absolute;
+      top:-20px;
+      width:10px;
+      height:18px;
+      background:var(--gold);
+      animation:fall 2.4s linear forwards;
+    }
+    @keyframes fall{
+      to{transform:translateY(110vh) rotate(760deg);opacity:.2}
+    }
+
+    .hidden{display:none!important}
+
+    @media (max-width: 900px){
+      header{
+        border-radius:24px;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      nav{justify-content:flex-start}
+      .hero,.apology,.questionsLayout{
+        grid-template-columns:1fr;
+      }
+      .phone{transform:none}
+      .phoneInner{min-height:440px}
+      .grid{grid-template-columns:1fr}
+      .sectionHead{display:block}
+      .questionList{
+        max-height:none;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+      }
+      .qMini{margin:0}
+      .snapFooter{display:block}
+    }
+
+    @media (max-width: 520px){
+      .wrap{width:min(100% - 18px, 1120px)}
+      nav a{font-size:12px;padding:8px 9px}
+      .heroText,.letter,.musicPanel,.choice{padding:20px}
+      .sectionHead h2{font-size:30px}
+      .lead,.letter p{font-size:17px}
+      .questionList{grid-template-columns:1fr}
+      .snapCard{min-height:430px;padding:20px}
+      .questionText{font-size:31px}
+      button,.btn{width:100%;text-align:center}
+      .actions{width:100%}
+      .qControls button{width:auto;flex:1}
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    طريقة إضافة الملفات:
+    1) حط هذا الملف باسم index.html
+    2) حط الفيديوهات والأغاني في نفس المجلد، أو غيّر الروابط من المتغير MEDIA تحت.
+    3) أسماء مقترحة:
+       eid.mp4
+       love1.mp4
+       love2.mp4
+       love3.mp4
+       apology.mp3
+       love.mp3
+  -->
+
+  <div class="hearts" id="hearts"></div>
+  <div class="confetti" id="confetti"></div>
+  <div class="toast" id="toast">تم</div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">♥</div>
+        <div>يوري ❤️ سيف</div>
+      </div>
+      <nav>
+        <a href="#eid">تهنئة العيد</a>
+        <a href="#memories">فيديوهاتنا</a>
+        <a href="#apology">اعتذار</a>
+        <a href="#questions">أسئلة الحب</a>
+        <a href="#admin">لوحة سيف</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="heroText card">
+          <div class="eyebrow">🌙 رسالة خاصة جدًا</div>
+          <h1>حبيبتي <span>يوري</span><br>أنا <span>سيف</span></h1>
+          <p class="lead">
+            جهزت لك صفحة صغيرة، بس معناها كبير. فيها تهنئة العيد، وذكريات حب،
+            واعتذار من قلبي لأنك زعلتي اليوم. والله ما كان عندي شبكة، بس قلبي معك طول الوقت.
+          </p>
+          <div class="actions">
+            <button onclick="startExperience()">ابدئي الرسالة ❤️</button>
+            <a class="btn btnSecondary" href="#apology">روحي للاعتذار</a>
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="phoneInner">
+            <span class="spark" style="right:20%;top:18%"></span>
+            <span class="spark" style="left:22%;top:28%;animation-delay:.5s"></span>
+            <span class="spark" style="right:32%;bottom:22%;animation-delay:.9s"></span>
+            <div class="moon"></div>
+            <h2>عيدك مبارك يا أجمل يوري</h2>
+            <p>
+              كل عام وأنتِ فرحة قلبي، وكل عيد وأنتِ أقرب شخص لروحي.
+              الصفحة هذي كلها لك وحدك.
+            </p>
+            <a class="btn" href="#eid">افتحي تهنئة العيد</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="eid">
+        <div class="sectionHead">
+          <div>
+            <h2>تهنئة العيد 🎥</h2>
+            <p>هنا ينحط فيديو التهنئة. غيّر اسم الملف من الكود أو حط فيديو باسم <b>eid.mp4</b>.</p>
+          </div>
+        </div>
+
+        <div class="videoBox card">
+          <video id="eidVideo" controls playsinline preload="metadata" poster="">
+            المتصفح لا يدعم تشغيل الفيديو.
+          </video>
+        </div>
+      </section>
+
+      <section id="memories">
+        <div class="sectionHead">
+          <div>
+            <h2>فيديوهات الحب والذكريات 💞</h2>
+            <p>أرسل لي الفيديوهات لاحقًا وأركبها لك، أو حطها بنفس الأسماء: love1.mp4 / love2.mp4 / love3.mp4.</p>
+          </div>
+        </div>
+
+        <div class="grid" id="loveVideosGrid"></div>
+      </section>
+
+      <section id="apology">
+        <div class="apology">
+          <div class="letter card">
+            <div class="eyebrow">🥺 اعتذار من القلب</div>
+            <h2>يوري، أنا آسف</h2>
+            <p>
+              حبيبتي يوري، أدري إني زعلتك اليوم لأني ما رسلت لك، وأدري إن الانتظار يوجع لما يكون من شخص تحبينه.
+              بس والله العظيم ما كان تجاهل ولا برود، ما كان عندي شبكة وما قدرت أوصل لك.
+            </p>
+            <p>
+              أنتِ مو شخص عادي عندي، أنتِ راحتي وضحكتي وأجمل جزء في يومي.
+              سامحيني يا أجمل قلب، وخلي العيد يبدأ بيننا بابتسامة منك.
+            </p>
+            <div class="quote">
+              وعد مني يا يوري: لو غبت، قلبي ما يغيب عنك. ولو تأخرت رسالة، محبتك ما تتأخر أبدًا.
+            </div>
+          </div>
+
+          <div class="musicPanel card">
+            <div class="disc" id="apologyDisc"></div>
+            <h2 style="margin:0;font-size:32px">أغنية الاعتذار 🎧</h2>
+            <p style="margin:0;color:var(--muted);font-weight:800;line-height:1.8">
+              حط ملف الأغنية باسم <b>apology.mp3</b>، أو غيّر الرابط من أعلى السكربت.
+            </p>
+            <audio id="apologyAudio" controls preload="metadata"></audio>
+            <button onclick="playAudio('apologyAudio','apologyDisc')">شغلي الأغنية والاعتذار</button>
+          </div>
+        </div>
+
+        <div class="choice card">
+          <h2>رضيتي علي يا يوري؟ 🥹</h2>
+          <div class="actions" style="justify-content:center">
+            <button onclick="answerLove(true)">رضيت ❤️</button>
+            <button class="noBtn" id="noBtn" onclick="answerLove(false)">لا، باقي زعلانة</button>
+          </div>
+          <div class="choiceResult" id="choiceResult"></div>
+        </div>
+      </section>
+
+      <section id="questions">
+        <div class="sectionHead">
+          <div>
+            <h2>أسئلة حب للسناب 💌</h2>
+            <p>20 سؤال. اختاري سؤال، اضغطي تصوير، وبعدها أرسلوها بالسناب وتجاوبون عليها.</p>
+          </div>
+          <div class="musicPanel card" style="padding:14px;min-width:min(100%,360px)">
+            <b>أغنية الحب</b>
+            <audio id="loveAudio" controls preload="metadata"></audio>
+          </div>
+        </div>
+
+        <div class="questionsLayout">
+          <div class="questionList card" id="questionList"></div>
+
+          <div class="questionStage card">
+            <div class="snapCard" id="snapCard">
+              <div class="snapTop">
+                <div class="pill" id="questionNumber">سؤال 1 من 20</div>
+                <div class="pill">يوري ❤️ سيف</div>
+              </div>
+
+              <div class="questionText" id="questionText"></div>
+
+              <div class="snapFooter">
+                <div class="snapHint">
+                  صوّروا السؤال وارسلونه بالسناب، وكل واحد يجاوب بصراحة وبحب.
+                </div>
+                <div class="pill">عيد + حب + صلح</div>
+              </div>
+            </div>
+
+            <div class="qControls">
+              <button class="smallBtn btnSecondary" onclick="prevQuestion()">السابق</button>
+              <button class="smallBtn" onclick="captureQuestion()">📸 تصوير السؤال</button>
+              <button class="smallBtn btnSecondary" onclick="nextQuestion()">التالي</button>
+              <button class="smallBtn btnSecondary" onclick="randomQuestion()">عشوائي</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin">
+        <div class="sectionHead">
+          <div>
+            <h2>لوحة سيف السرية 🔐</h2>
+            <p>من هنا تشوف آخر إجابة اختارتها يوري، وكل الإجابات المحفوظة بالسحابة.</p>
+          </div>
+        </div>
+
+        <div class="adminBox card">
+          <div class="statusDot" id="cloudStatus">السحابة غير مفعلة حتى تضيف Firebase</div>
+
+          <div class="adminLogin">
+            <input id="adminPasswordInput" type="password" placeholder="كلمة مرور لوحة سيف" />
+            <button onclick="openAdminPanel()">دخول اللوحة</button>
+          </div>
+
+          <div id="adminContent" class="hidden">
+            <div class="resultCard" id="latestResult">
+              لا توجد نتيجة بعد.
+            </div>
+
+            <h3 style="font-size:24px;margin:22px 0 8px">سجل الإجابات</h3>
+            <div id="resultsList"></div>
+
+            <div class="actions" style="margin-top:18px">
+              <button class="btnSecondary" onclick="loadLocalResults()">عرض آخر نتيجة محفوظة على نفس الجهاز</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="footer">
+      صُنعت بحب من سيف إلى يوري ❤️ كل عام وأنتم بخير
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      doc,
+      setDoc,
+      onSnapshot,
+      query,
+      orderBy,
+      limit,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    /*
+      إعداد السحابة:
+      1) افتح Firebase Console
+      2) أنشئ مشروع
+      3) فعّل Firestore Database
+      4) Project settings > Web app
+      5) انسخ firebaseConfig والصقه هنا بدل القيم المكتوبة PUT_HERE
+    */
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyAiifC3bER_VgmbKW0liUj15MK9ddX1pL0",
+      authDomain: "syfttttt.firebaseapp.com",
+      projectId: "syfttttt",
+      storageBucket: "syfttttt.firebasestorage.app",
+      messagingSenderId: "520657441833",
+      appId: "1:520657441833:web:f8aca228ed853107463838",
+      measurementId: "G-YT9LT1V4ES"
+    };
+
+    // غيّر كلمة مرور لوحة سيف من هنا
+    const ADMIN_PASSWORD = "saif2026";
+
+    const FIREBASE_READY =
+      FIREBASE_CONFIG.apiKey &&
+      FIREBASE_CONFIG.apiKey !== "PUT_HERE" &&
+      FIREBASE_CONFIG.projectId &&
+      FIREBASE_CONFIG.projectId !== "PUT_HERE";
+
+    let db = null;
+    if (FIREBASE_READY) {
+      try {
+        const app = initializeApp(FIREBASE_CONFIG);
+        db = getFirestore(app);
+      } catch (error) {
+        console.error("Firebase init error:", error);
+      }
+    }
+
+    // نخلي الدوال متاحة للأزرار لأنها داخل module
+    window.startExperience = startExperience;
+    window.playAudio = playAudio;
+    window.answerLove = answerLove;
+    window.prevQuestion = prevQuestion;
+    window.nextQuestion = nextQuestion;
+    window.randomQuestion = randomQuestion;
+    window.captureQuestion = captureQuestion;
+    window.openAdminPanel = openAdminPanel;
+    window.loadLocalResults = loadLocalResults;
+
+    // عدّل الروابط هنا فقط
+    const MEDIA = {
+      eidVideo: "eid.mp4",
+      loveVideos: [
+        { title: "فيديو الحب الأول", note: "أول ذكرى حلوة ليوري.", src: "love1.mp4" },
+        { title: "فيديو الحب الثاني", note: "رسالة بسيطة بس من القلب.", src: "love2.mp4" },
+        { title: "فيديو الحب الثالث", note: "كل لحظة بيننا عيد.", src: "love3.mp4" }
+      ],
+      apologySong: "apology.mp3",
+      loveSong: "love.mp3"
+    };
+
+    const QUESTIONS = [
+      "وش أكثر لحظة حسّيتي فيها إني أحبك بصدق؟",
+      "وش الشيء اللي تبغينه مني لما تزعلين؟",
+      "لو بنعيد أول يوم عرفنا بعض، وش بتقولين لي؟",
+      "وش أكثر كلمة مني تفرح قلبك؟",
+      "وش الذكرى اللي تتمنين نكررها؟",
+      "لو عندنا يوم كامل بدون أحد، وين نروح؟",
+      "وش أكثر تصرف مني يخليك تحسين بالأمان؟",
+      "وش الشيء اللي تبغيني أغيره عشانك؟",
+      "لو أرسل لك رسالة الآن، وش تتمنين يكون مكتوب فيها؟",
+      "وش أكثر شيء يخليك تبتسمين غصب؟",
+      "وش الأغنية اللي تحسينها تشبهنا؟",
+      "لو صار بيننا زعل، وش أفضل طريقة أراضيك فيها؟",
+      "وش الشيء اللي تحبينه في شخصيتي؟",
+      "وش أول شيء جاء ببالك لما عرفتي إني سويت لك الموقع؟",
+      "لو نكتب وعد بيننا، وش يكون الوعد؟",
+      "وش أكثر مكان تتمنين نروح له سوا؟",
+      "متى تحسين إنك أقرب شخص لقلبي؟",
+      "وش الشيء اللي يخليك تقولين: هذا سيف حقي؟",
+      "لو العيد أمنية، وش أمنيتك لنا؟",
+      "آخر سؤال: سامحتيني من قلبك؟"
+    ];
+
+    let currentQuestion = 0;
+
+    function qs(id){ return document.getElementById(id); }
+
+    function showToast(message){
+      const toast = qs("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    function startExperience(){
+      location.hash = "#eid";
+      const vid = qs("eidVideo");
+      vid.play().catch(() => {});
+      showToast("شغّلي الفيديو وكملي الرسالة يا يوري ❤️");
+    }
+
+    function playAudio(audioId, discId){
+      const audio = qs(audioId);
+      const disc = qs(discId);
+      audio.play().then(() => {
+        if(disc) disc.classList.add("playing");
+      }).catch(() => {
+        showToast("اضغطي تشغيل من مشغل الصوت لو المتصفح منع التشغيل");
+      });
+    }
+
+    function setMedia(){
+      qs("eidVideo").src = MEDIA.eidVideo;
+      qs("apologyAudio").src = MEDIA.apologySong;
+      qs("loveAudio").src = MEDIA.loveSong;
+
+      const grid = qs("loveVideosGrid");
+      grid.innerHTML = "";
+      MEDIA.loveVideos.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "memory card";
+        card.innerHTML = `
+          <video controls playsinline preload="metadata" src="${item.src}"></video>
+          <h3>${item.title}</h3>
+          <p>${item.note}</p>
+        `;
+        grid.appendChild(card);
+      });
+
+      qs("apologyAudio").addEventListener("pause", () => qs("apologyDisc").classList.remove("playing"));
+      qs("apologyAudio").addEventListener("play", () => qs("apologyDisc").classList.add("playing"));
+    }
+
+    async function answerLove(ok){
+      const result = qs("choiceResult");
+      const text = ok ? "رضيت ❤️" : "ما رضيت / باقي زعلانة 🥺";
+
+      await saveYoriAnswer({
+        answer: text,
+        accepted: ok,
+        message: ok ? "يوري رضيت على سيف" : "يوري باقي زعلانة من سيف",
+        page: location.href,
+        userAgent: navigator.userAgent,
+        localTime: new Date().toLocaleString("ar-SA")
+      });
+
+      if(ok){
+        result.innerHTML = "يا أجمل خبر 😭❤️ خلاص العيد صار عيدين، رضى يوري بالدنيا كلها. <br>تم حفظ الإجابة لسيف.";
+        makeConfetti();
+        setTimeout(() => location.hash = "#questions", 900);
+      }else{
+        result.innerHTML = "طيب أعطيني فرصة أخيرة 🥺 ادخلي أسئلة الحب، وبجاوبك بكل صدق لين ترضين. <br>تم حفظ الإجابة لسيف.";
+        const no = qs("noBtn");
+        no.style.transform = `translate(${Math.random()*30-15}px, ${Math.random()*20-10}px)`;
+      }
+    }
+
+    async function saveYoriAnswer(data){
+      const payload = {
+        ...data,
+        createdAtText: new Date().toLocaleString("ar-SA"),
+        createdAtMs: Date.now()
+      };
+
+      localStorage.setItem("yori_latest_answer", JSON.stringify(payload));
+
+      if(!db){
+        showToast("انحفظت على الجهاز فقط، فعّل Firebase للحفظ السحابي");
+        return;
+      }
+
+      try{
+        const cloudPayload = {
+          ...payload,
+          createdAt: serverTimestamp()
+        };
+
+        await addDoc(collection(db, "yori_saif_answers"), cloudPayload);
+        await setDoc(doc(db, "yori_saif_private", "latest_answer"), cloudPayload);
+        showToast("تم حفظ الإجابة بالسحابة ❤️");
+      }catch(error){
+        console.error("Save answer error:", error);
+        showToast("ما انحفظت بالسحابة، تأكد من قواعد Firestore");
+      }
+    }
+
+    function openAdminPanel(){
+      const input = qs("adminPasswordInput");
+      if(input.value !== ADMIN_PASSWORD){
+        showToast("كلمة المرور غلط");
+        return;
+      }
+
+      qs("adminContent").classList.remove("hidden");
+      showToast("تم فتح لوحة سيف");
+      subscribeCloudResults();
+      loadLocalResults();
+    }
+
+    function subscribeCloudResults(){
+      const status = qs("cloudStatus");
+
+      if(!db){
+        status.textContent = "السحابة غير مفعلة: أضف Firebase config في أعلى الكود";
+        status.classList.remove("ok");
+        return;
+      }
+
+      status.textContent = "السحابة مفعلة وجاري قراءة النتائج";
+      status.classList.add("ok");
+
+      const latestRef = doc(db, "yori_saif_private", "latest_answer");
+      onSnapshot(latestRef, (snap) => {
+        if(snap.exists()){
+          renderLatestResult(snap.data(), "آخر إجابة من السحابة");
+        }
+      }, (error) => {
+        console.error("Latest snapshot error:", error);
+        status.textContent = "خطأ في قراءة السحابة، تأكد من قواعد Firestore";
+        status.classList.remove("ok");
+      });
+
+      const q = query(
+        collection(db, "yori_saif_answers"),
+        orderBy("createdAtMs", "desc"),
+        limit(20)
+      );
+
+      onSnapshot(q, (snapshot) => {
+        const list = qs("resultsList");
+        list.innerHTML = "";
+        if(snapshot.empty){
+          list.innerHTML = `<div class="resultCard">ما فيه إجابات محفوظة بالسحابة حتى الآن.</div>`;
+          return;
+        }
+
+        snapshot.forEach((docSnap) => {
+          const item = docSnap.data();
+          const div = document.createElement("div");
+          div.className = "resultCard";
+          div.innerHTML = `
+            <b>الإجابة:</b> ${escapeHtml(item.answer || "غير معروف")}<br>
+            <b>الوقت:</b> ${escapeHtml(item.createdAtText || item.localTime || "غير معروف")}<br>
+            <b>الرسالة:</b> ${escapeHtml(item.message || "")}
+          `;
+          list.appendChild(div);
+        });
+      }, (error) => {
+        console.error("Results snapshot error:", error);
+        qs("resultsList").innerHTML = `<div class="resultCard">تعذر قراءة السجل من السحابة. تأكد من قواعد Firestore.</div>`;
+      });
+    }
+
+    function renderLatestResult(item, title){
+      qs("latestResult").innerHTML = `
+        <b>${title}</b><br>
+        <b>الإجابة:</b> ${escapeHtml(item.answer || "غير معروف")}<br>
+        <b>الوقت:</b> ${escapeHtml(item.createdAtText || item.localTime || "غير معروف")}<br>
+        <b>الرسالة:</b> ${escapeHtml(item.message || "")}
+      `;
+    }
+
+    function loadLocalResults(){
+      const raw = localStorage.getItem("yori_latest_answer");
+      if(!raw){
+        if(!qs("latestResult").innerHTML.trim() || qs("latestResult").textContent.includes("لا توجد")){
+          qs("latestResult").innerHTML = "لا توجد نتيجة محفوظة على هذا الجهاز.";
+        }
+        return;
+      }
+
+      try{
+        renderLatestResult(JSON.parse(raw), "آخر إجابة محفوظة على هذا الجهاز");
+      }catch(e){
+        qs("latestResult").innerHTML = "تعذر قراءة النتيجة المحلية.";
+      }
+    }
+
+    function escapeHtml(value){
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function makeConfetti(){
+      const area = qs("confetti");
+      area.innerHTML = "";
+      for(let i=0;i<90;i++){
+        const s = document.createElement("span");
+        s.style.left = Math.random()*100 + "%";
+        s.style.animationDelay = Math.random()*0.7 + "s";
+        s.style.background = Math.random() > .5 ? "var(--gold)" : "var(--pink)";
+        s.style.borderRadius = Math.random() > .5 ? "999px" : "2px";
+        area.appendChild(s);
+      }
+      setTimeout(() => area.innerHTML = "", 3500);
+    }
+
+    function renderQuestions(){
+      const list = qs("questionList");
+      list.innerHTML = "";
+      QUESTIONS.forEach((q, i) => {
+        const btn = document.createElement("button");
+        btn.className = "qMini" + (i === currentQuestion ? " active" : "");
+        btn.textContent = `${i+1}. ${q}`;
+        btn.onclick = () => setQuestion(i);
+        list.appendChild(btn);
+      });
+      updateQuestionCard();
+    }
+
+    function setQuestion(i){
+      currentQuestion = (i + QUESTIONS.length) % QUESTIONS.length;
+      renderQuestions();
+    }
+
+    function updateQuestionCard(){
+      qs("questionNumber").textContent = `سؤال ${currentQuestion + 1} من ${QUESTIONS.length}`;
+      qs("questionText").textContent = QUESTIONS[currentQuestion];
+    }
+
+    function nextQuestion(){ setQuestion(currentQuestion + 1); }
+    function prevQuestion(){ setQuestion(currentQuestion - 1); }
+    function randomQuestion(){ setQuestion(Math.floor(Math.random() * QUESTIONS.length)); }
+
+    async function captureQuestion(){
+      const card = qs("snapCard");
+
+      if(!window.html2canvas){
+        showToast("انتظر تحميل أداة التصوير ثم جرّب مرة ثانية");
+        return;
+      }
+
+      showToast("جاري تجهيز الصورة...");
+      const canvas = await html2canvas(card, {
+        backgroundColor: null,
+        scale: Math.min(3, window.devicePixelRatio || 2),
+        useCORS: true
+      });
+
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], `سؤال-حب-${currentQuestion+1}.png`, { type:"image/png" });
+
+        if(navigator.canShare && navigator.canShare({ files:[file] })){
+          try{
+            await navigator.share({
+              files:[file],
+              title:"سؤال حب ليوري وسيف",
+              text:"جاوبوا السؤال بالسناب ❤️"
+            });
+            showToast("افتح السناب واختار الصورة ❤️");
+            return;
+          }catch(e){}
+        }
+
+        const link = document.createElement("a");
+        link.download = `سؤال-حب-${currentQuestion+1}.png`;
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        URL.revokeObjectURL(link.href);
+        showToast("تم حفظ صورة السؤال، ارسلها بالسناب ❤️");
+      }, "image/png");
+    }
+
+    function makeHearts(){
+      const area = qs("hearts");
+      for(let i=0;i<22;i++){
+        const h = document.createElement("span");
+        h.className = "heart";
+        h.style.left = Math.random()*100 + "%";
+        h.style.animationDuration = (8 + Math.random()*9) + "s";
+        h.style.animationDelay = (Math.random()*8) + "s";
+        h.style.opacity = (.25 + Math.random()*.55).toFixed(2);
+        h.style.transform = `scale(${.55 + Math.random()*1.1}) rotate(45deg)`;
+        area.appendChild(h);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setMedia();
+      renderQuestions();
+      makeHearts();
+
+      const status = qs("cloudStatus");
+      if(db){
+        status.textContent = "السحابة مفعلة";
+        status.classList.add("ok");
+      }else{
+        status.textContent = "السحابة غير مفعلة حتى تضيف Firebase config";
+        status.classList.remove("ok");
+      }
+    });
+  </script>
+</body>
+</html>
