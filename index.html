@@ -649,6 +649,43 @@
       margin-top:10px;
     }
 
+
+    .siteAccessScreen{
+      position:fixed;
+      inset:0;
+      z-index:130;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,93,168,.45), transparent 25%),
+        radial-gradient(circle at 80% 10%, rgba(255,215,119,.26), transparent 28%),
+        linear-gradient(145deg,#250015,#4a002c);
+    }
+    .accessCard{
+      width:min(560px,100%);
+      padding:28px;
+      text-align:center;
+    }
+    .accessCard h2{
+      margin:0 0 10px;
+      font-size:38px;
+      font-weight:900;
+    }
+    .accessCard p{
+      color:var(--muted);
+      font-weight:800;
+      line-height:1.8;
+      margin:0 0 16px;
+    }
+    .accessCard input{
+      text-align:center;
+      letter-spacing:3px;
+      font-size:22px;
+      margin-bottom:12px;
+    }
+
     .loginScreen{
       position:fixed;
       inset:0;
@@ -963,7 +1000,17 @@
     <button class="adminTopBtn" onclick="openAdminModal()">⚙️ الإدارة</button>
   </div>
 
-  <div class="loginScreen" id="loginScreen">
+  <div class="siteAccessScreen" id="siteAccessScreen">
+    <div class="accessCard card">
+      <div class="logo siteLogo" style="margin:0 auto 14px">♥</div>
+      <h2 id="siteAccessTitle">رمز الدخول 🔐</h2>
+      <p id="siteAccessText">الموقع خاص، اكتب الرمز عشان تدخل.</p>
+      <input id="siteAccessInput" type="password" inputmode="numeric" placeholder="رمز الدخول" onkeydown="if(event.key==='Enter') checkSiteAccess()" />
+      <button onclick="checkSiteAccess()">دخول الموقع</button>
+    </div>
+  </div>
+
+  <div class="loginScreen hidden" id="loginScreen">
     <div class="loginCard card">
       <div class="logo" id="loginLogo" style="margin:0 auto 14px">♥</div>
       <h2 id="loginTitle">أهلًا يا أجمل شخص ❤️</h2>
@@ -1028,7 +1075,8 @@
           </div>
 
           <div class="adminForm">
-            <h4>النصوص الرئيسية</h4>
+            <h4>الحماية والنصوص الرئيسية</h4>
+            <input id="accessCodeInput" placeholder="رمز دخول الموقع مثال: 1234" />
             <input id="siteTitleInput" placeholder="عنوان الموقع" />
             <input id="brandTextInput" placeholder="اسم الهيدر" />
             <input id="loginTitleInput" placeholder="عنوان شاشة البداية" />
@@ -1393,6 +1441,7 @@
     ];
 
     const DEFAULT_SITE = {
+      accessCode: "2026",
       siteTitle: "يوري ❤️ من سيف",
       brandText: "يوري ❤️ سيف",
       loginTitle: "أهلًا يا أجمل شخص ❤️",
@@ -1463,8 +1512,11 @@
     let loveChoices = [];
     let admins = [];
     let currentQuestionIndex = 0;
+    let accessGranted = false;
     let unsubscribers = [];
 
+    window.checkSiteAccess = checkSiteAccess;
+    window.lockSiteAgain = lockSiteAgain;
     window.openAdminModal = openAdminModal;
     window.closeAdminModal = closeAdminModal;
     window.adminLogin = adminLogin;
@@ -1509,6 +1561,65 @@
       setTimeout(() => toast.classList.remove("show"), 2600);
     }
 
+
+    function currentAccessCode(){
+      return String(siteSettings.accessCode || DEFAULT_SITE.accessCode || "2026").trim();
+    }
+
+    function initAccessGate(){
+      const screen = qs("siteAccessScreen");
+      const login = qs("loginScreen");
+      if(!screen || !login) return;
+
+      const savedCode = localStorage.getItem("yori_saif_site_access_code");
+      if(savedCode && savedCode === currentAccessCode()){
+        grantSiteAccess(false);
+        return;
+      }
+
+      accessGranted = false;
+      screen.classList.remove("hidden");
+      login.classList.add("hidden");
+    }
+
+    function checkSiteAccess(){
+      const input = qs("siteAccessInput");
+      const value = String(input?.value || "").trim();
+
+      if(value === currentAccessCode()){
+        localStorage.setItem("yori_saif_site_access_code", value);
+        grantSiteAccess(true);
+      }else{
+        showToast("رمز الدخول غلط");
+        if(input) input.value = "";
+      }
+    }
+
+    function grantSiteAccess(showMessage){
+      const screen = qs("siteAccessScreen");
+      const login = qs("loginScreen");
+      if(!screen || !login) return;
+
+      accessGranted = true;
+      screen.classList.add("hidden");
+
+      if(currentProfile){
+        login.classList.add("hidden");
+      }else{
+        login.classList.remove("hidden");
+      }
+
+      if(showMessage) showToast("تم فتح الموقع ❤️");
+    }
+
+    function lockSiteAgain(){
+      localStorage.removeItem("yori_saif_site_access_code");
+      currentProfile = null;
+      localStorage.removeItem("yori_saif_profile_v4");
+      qs("loginScreen").classList.add("hidden");
+      initAccessGate();
+    }
+
     function cleanId(value){
       return String(value || "")
         .trim()
@@ -1531,6 +1642,11 @@
     }
 
     function selectVisitor(name){
+      if(!accessGranted){
+        initAccessGate();
+        showToast("اكتب رمز الدخول أول");
+        return;
+      }
       currentProfile = { name, role: name };
       localStorage.setItem("yori_saif_profile_v4", JSON.stringify(currentProfile));
       qs("loginScreen").classList.add("hidden");
@@ -1605,6 +1721,8 @@
 
     function applySiteSettings(){
       document.title = siteSettings.siteTitle || DEFAULT_SITE.siteTitle;
+      if(qs("siteAccessTitle")) qs("siteAccessTitle").textContent = "رمز الدخول 🔐";
+      if(qs("siteAccessText")) qs("siteAccessText").textContent = "الموقع خاص، اكتب الرمز عشان تدخل.";
       qs("brandText").textContent = siteSettings.brandText || DEFAULT_SITE.brandText;
       qs("loginTitle").textContent = siteSettings.loginTitle || DEFAULT_SITE.loginTitle;
       qs("loginText").textContent = siteSettings.loginText || DEFAULT_SITE.loginText;
@@ -1633,6 +1751,7 @@
 
     function fillSiteForm(){
       if(!qs("siteTitleInput")) return;
+      qs("accessCodeInput").value = siteSettings.accessCode || DEFAULT_SITE.accessCode || "2026";
       qs("siteTitleInput").value = siteSettings.siteTitle || "";
       qs("brandTextInput").value = siteSettings.brandText || "";
       qs("loginTitleInput").value = siteSettings.loginTitle || "";
@@ -2029,6 +2148,7 @@
       }
 
       const payload = {
+        accessCode: qs("accessCodeInput").value.trim() || DEFAULT_SITE.accessCode,
         siteTitle: qs("siteTitleInput").value.trim() || DEFAULT_SITE.siteTitle,
         brandText: qs("brandTextInput").value.trim() || DEFAULT_SITE.brandText,
         loginTitle: qs("loginTitleInput").value.trim() || DEFAULT_SITE.loginTitle,
@@ -2046,6 +2166,8 @@
       };
 
       siteSettings = { ...DEFAULT_SITE, ...payload };
+      localStorage.setItem("yori_saif_site_access_code", siteSettings.accessCode);
+      accessGranted = true;
       applySiteSettings();
 
       if(db){
@@ -2719,6 +2841,7 @@
         if(snap.exists()){
           siteSettings = { ...DEFAULT_SITE, ...snap.data() };
           applySiteSettings();
+          initAccessGate();
         }else{
           await setDoc(doc(db, "yori_saif_settings", "site"), { ...DEFAULT_SITE, updatedAt:serverTimestamp() });
         }
@@ -2874,6 +2997,7 @@
       renderPermissionsGrid();
       loadProfile();
       applySiteSettings();
+      initAccessGate();
       applyMediaSettings();
       renderQuestions();
       renderLoveVideos();
