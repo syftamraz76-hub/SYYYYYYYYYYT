@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>يوري ❤️ من سيف</title>
-
-  <!-- غيّر الوصف والصورة لو رفعت الموقع -->
-  <meta name="description" content="تهنئة واعتذار رومانسي من سيف إلى يوري" />
-  <meta property="og:title" content="حبيبتي يوري ❤️ من سيف" />
-  <meta property="og:description" content="رسالة عيد واعتذار وحب" />
+  <title id="pageTitle">يوري ❤️ من سيف</title>
+  <meta name="description" content="صفحة حب واعتذار وأسئلة بين يوري وسيف" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +23,8 @@
       --glass2:rgba(255,255,255,.18);
       --shadow:0 22px 60px rgba(0,0,0,.35);
       --radius:28px;
+      --danger:#ff6b8b;
+      --ok:#7dffb2;
     }
 
     *{box-sizing:border-box}
@@ -49,21 +47,14 @@
       position:fixed;
       inset:0;
       pointer-events:none;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1.5px);
+      background-image:radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1.5px);
       background-size:28px 28px;
       opacity:.18;
       mask-image:linear-gradient(to bottom, #000, transparent 82%);
       z-index:0;
     }
 
-    .hearts{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      z-index:1;
-    }
+    .hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
     .heart{
       position:absolute;
       bottom:-60px;
@@ -85,15 +76,21 @@
     }
     .heart::before{left:-11px;top:0}
     .heart::after{left:0;top:-11px}
-    @keyframes floatUp{
-      to{transform:translateY(-120vh) rotate(45deg);opacity:0}
-    }
+    @keyframes floatUp{to{transform:translateY(-120vh) rotate(45deg);opacity:0}}
 
     .wrap{
       position:relative;
       z-index:2;
       width:min(1120px, calc(100% - 28px));
       margin:auto;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.07));
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
     }
 
     header{
@@ -120,6 +117,7 @@
       font-weight:900;
       letter-spacing:.2px;
       white-space:nowrap;
+      cursor:pointer;
     }
     .logo{
       width:42px;
@@ -131,30 +129,45 @@
       box-shadow:0 0 25px rgba(255,93,168,.55);
       color:#3a001f;
       font-size:23px;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    nav{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    nav a{
+    nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    nav a,.adminTopBtn{
       color:var(--white);
       text-decoration:none;
       font-size:14px;
-      font-weight:700;
+      font-weight:800;
       padding:9px 12px;
       border-radius:999px;
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.08);
+      font-family:inherit;
+      box-shadow:none;
+      cursor:pointer;
     }
-    nav a:hover{background:rgba(255,255,255,.18)}
+    nav a:hover,.adminTopBtn:hover{background:rgba(255,255,255,.18);transform:none}
 
-    section{
-      min-height:auto;
-      padding:54px 0;
+    .adminCorner{
+      position:fixed;
+      top:14px;
+      left:14px;
+      z-index:80;
     }
+    .adminTopBtn{
+      background:linear-gradient(135deg, rgba(255,215,119,.22), rgba(255,93,168,.22));
+      border-color:rgba(255,215,119,.28);
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+
+    section{padding:54px 0}
 
     .hero{
       min-height:calc(100vh - 74px);
@@ -163,14 +176,6 @@
       gap:28px;
       align-items:center;
       padding:52px 0 40px;
-    }
-
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.07));
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(18px);
     }
 
     .heroText{
@@ -221,6 +226,7 @@
       margin:20px 0 26px;
       font-weight:600;
       max-width:760px;
+      white-space:pre-wrap;
     }
 
     .actions{
@@ -246,10 +252,17 @@
       transition:.2s ease;
     }
     button:hover,.btn:hover{transform:translateY(-2px)}
-    .btnSecondary{
+    button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .btnSecondary,.ghostBtn{
       color:var(--white);
       background:rgba(255,255,255,.13);
       border:1px solid rgba(255,255,255,.18);
+      box-shadow:none;
+    }
+    .dangerBtn{
+      color:#fff;
+      background:rgba(255,107,139,.22);
+      border:1px solid rgba(255,107,139,.35);
       box-shadow:none;
     }
 
@@ -286,19 +299,12 @@
       box-shadow:0 0 80px rgba(255,215,119,.55);
       margin-bottom:18px;
     }
-    .phoneInner h2{
-      margin:0;
-      font-size:34px;
-      font-weight:900;
-    }
-    .phoneInner p{
-      color:var(--muted);
-      line-height:1.8;
-      font-weight:700;
-    }
+    .phoneInner h2{margin:0;font-size:34px;font-weight:900}
+    .phoneInner p{color:var(--muted);line-height:1.8;font-weight:700;white-space:pre-wrap}
     .spark{
       position:absolute;
-      width:9px;height:9px;
+      width:9px;
+      height:9px;
       border-radius:50%;
       background:#fff;
       box-shadow:0 0 18px #fff;
@@ -325,9 +331,7 @@
       line-height:1.7;
     }
 
-    .videoBox{
-      padding:18px;
-    }
+    .videoBox{padding:18px}
     video{
       width:100%;
       border-radius:22px;
@@ -358,10 +362,18 @@
       font-weight:900;
     }
     .memory p{
-      margin:0 4px 4px;
+      margin:0 4px 12px;
       color:var(--muted);
       line-height:1.7;
       font-weight:700;
+      white-space:pre-wrap;
+    }
+    .miniLine{
+      color:rgba(255,255,255,.72);
+      font-size:13px;
+      font-weight:800;
+      margin:0 4px 8px;
+      word-break:break-word;
     }
 
     .apology{
@@ -370,9 +382,7 @@
       gap:18px;
       align-items:stretch;
     }
-    .letter{
-      padding:26px;
-    }
+    .letter{padding:26px}
     .letter h2{
       margin:0 0 14px;
       font-size:clamp(30px,4vw,50px);
@@ -384,6 +394,7 @@
       line-height:2;
       color:var(--muted);
       font-weight:700;
+      white-space:pre-wrap;
     }
     .quote{
       margin-top:18px;
@@ -394,6 +405,7 @@
       color:#fff;
       font-weight:900;
       line-height:1.9;
+      white-space:pre-wrap;
     }
 
     .musicPanel{
@@ -424,6 +436,10 @@
       margin:auto;
       filter:drop-shadow(0 12px 20px rgba(0,0,0,.18));
     }
+    .mediaPlayer video{
+      max-height:380px;
+      object-fit:contain;
+    }
 
     .choice{
       margin-top:18px;
@@ -439,11 +455,69 @@
       min-height:36px;
       line-height:1.8;
     }
-    .noBtn{
+
+
+    .nameChoiceBox{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+    .choiceLoginBtn{
+      min-height:74px;
+      border-radius:22px;
+      font-size:20px;
+      color:#3a001f;
+    }
+    .choiceLoginBtn.secondary{
       color:#fff;
-      background:rgba(255,255,255,.12);
+      background:rgba(255,255,255,.13);
       border:1px solid rgba(255,255,255,.18);
       box-shadow:none;
+    }
+
+    .profileBox{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      margin-top:18px;
+      align-items:center;
+    }
+    input,select,textarea{
+      width:100%;
+      border:1px solid rgba(255,255,255,.18);
+      outline:0;
+      border-radius:20px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.1);
+      color:#fff;
+      font-family:inherit;
+      font-size:16px;
+      font-weight:800;
+    }
+    select option{background:#3a001f;color:#fff}
+    input::placeholder,textarea::placeholder{color:rgba(255,255,255,.65)}
+    textarea{
+      min-height:130px;
+      resize:vertical;
+      line-height:1.8;
+      white-space:pre-wrap;
+    }
+    input[type="file"]{
+      cursor:pointer;
+      padding:11px;
+      border-style:dashed;
+    }
+    .currentUserBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:10px 14px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--muted);
+      font-weight:900;
     }
 
     .questionsLayout{
@@ -454,7 +528,7 @@
     }
     .questionList{
       padding:18px;
-      max-height:640px;
+      max-height:700px;
       overflow:auto;
     }
     .qMini{
@@ -475,11 +549,9 @@
       border-color:rgba(255,215,119,.35);
     }
 
-    .questionStage{
-      padding:18px;
-    }
+    .questionStage{padding:18px}
     .snapCard{
-      min-height:470px;
+      min-height:310px;
       padding:28px;
       border-radius:30px;
       background:
@@ -509,6 +581,7 @@
       gap:12px;
       position:relative;
       z-index:1;
+      flex-wrap:wrap;
     }
     .pill{
       display:inline-flex;
@@ -525,27 +598,13 @@
       position:relative;
       z-index:1;
       text-align:center;
-      font-size:clamp(30px, 5vw, 56px);
+      font-size:clamp(28px, 4.4vw, 52px);
       line-height:1.45;
       font-weight:900;
-      margin:40px 0;
+      margin:32px 0;
       text-shadow:0 8px 25px rgba(0,0,0,.24);
+      white-space:pre-wrap;
     }
-    .snapFooter{
-      position:relative;
-      z-index:1;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:end;
-      color:var(--muted);
-      font-weight:800;
-      line-height:1.7;
-    }
-    .snapHint{
-      max-width:360px;
-    }
-
     .qControls{
       display:flex;
       flex-wrap:wrap;
@@ -553,45 +612,157 @@
       margin-top:16px;
       justify-content:center;
     }
-    .smallBtn{
-      padding:12px 15px;
-      font-size:15px;
-    }
+    .smallBtn{padding:12px 15px;font-size:15px}
 
-
-    .adminBox{
-      padding:24px;
+    .answerBox{
+      margin-top:18px;
+      padding:18px;
+      border-radius:24px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
     }
-    .adminLogin{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin:16px 0;
+    .answerGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:16px;
     }
-    .adminLogin input{
-      flex:1;
-      min-width:220px;
-      border:1px solid rgba(255,255,255,.18);
-      outline:0;
-      border-radius:999px;
-      padding:14px 16px;
-      background:rgba(255,255,255,.1);
-      color:#fff;
-      font-family:inherit;
-      font-size:16px;
-      font-weight:800;
-    }
-    .adminLogin input::placeholder{color:rgba(255,255,255,.65)}
-    .resultCard{
-      margin-top:14px;
+    .personAnswer{
       padding:16px;
       border-radius:22px;
       background:rgba(255,255,255,.1);
       border:1px solid rgba(255,255,255,.13);
-      line-height:1.9;
-      font-weight:800;
+      min-height:130px;
     }
-    .resultCard b{color:var(--gold)}
+    .personAnswer h3{margin:0 0 8px;color:var(--gold);font-size:20px}
+    .personAnswer p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-weight:800;
+      white-space:pre-wrap;
+    }
+    .answerTime{
+      font-size:12px;
+      color:rgba(255,255,255,.62);
+      font-weight:800;
+      margin-top:10px;
+    }
+
+    .loginScreen{
+      position:fixed;
+      inset:0;
+      z-index:120;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,93,168,.45), transparent 25%),
+        radial-gradient(circle at 80% 10%, rgba(255,215,119,.26), transparent 28%),
+        linear-gradient(145deg,#250015,#4a002c);
+    }
+    .loginCard{
+      width:min(620px,100%);
+      padding:26px;
+      text-align:center;
+    }
+    .loginCard h2{margin:0 0 10px;font-size:40px}
+    .loginCard p{color:var(--muted);font-weight:800;line-height:1.8}
+
+    .modalOverlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.68);
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      backdrop-filter:blur(10px);
+    }
+    .modal{
+      width:min(1120px, 100%);
+      max-height:92vh;
+      overflow:auto;
+      border-radius:30px;
+      padding:20px;
+    }
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .modalHead h2{margin:0;font-size:30px}
+    .closeBtn{
+      width:44px;
+      height:44px;
+      padding:0;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:none;
+      flex:0 0 auto;
+    }
+
+    .adminTabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin:12px 0 18px;
+    }
+    .tabBtn{
+      color:#fff;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:none;
+      padding:11px 14px;
+      border-radius:16px;
+    }
+    .tabBtn.active{
+      background:linear-gradient(135deg, rgba(255,215,119,.28), rgba(255,93,168,.22));
+      border-color:rgba(255,215,119,.32);
+    }
+    .adminPanel{display:none}
+    .adminPanel.active{display:block}
+    .adminForm{
+      padding:16px;
+      border-radius:24px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      margin-bottom:16px;
+    }
+    .adminGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .adminItem{
+      padding:14px;
+      border-radius:20px;
+      background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.12);
+      margin-bottom:10px;
+    }
+    .adminItem h4{margin:0 0 8px;color:#fff;font-size:18px}
+    .adminItem p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      font-weight:800;
+      white-space:pre-wrap;
+    }
+    .adminActions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
     .statusDot{
       display:inline-flex;
       align-items:center;
@@ -602,6 +773,7 @@
       border:1px solid rgba(255,255,255,.13);
       color:var(--muted);
       font-weight:900;
+      margin-bottom:12px;
     }
     .statusDot::before{
       content:"";
@@ -616,11 +788,55 @@
       box-shadow:0 0 12px #7dffb2;
     }
 
-    .footer{
-      text-align:center;
-      padding:30px 0 50px;
+    .filePicker{
+      width:100%;
+      border:1px dashed rgba(255,255,255,.25);
+      border-radius:22px;
+      padding:14px;
+      background:rgba(255,255,255,.08);
       color:var(--muted);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .filePicker small{
+      display:block;
+      color:rgba(255,255,255,.72);
+      line-height:1.7;
+      margin-top:5px;
+    }
+    .currentFileBox{
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--muted);
+      font-size:13px;
       font-weight:800;
+      line-height:1.6;
+      margin:8px 0 12px;
+      word-break:break-all;
+    }
+    .checkGrid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:10px;
+      margin:10px 0;
+    }
+    .checkItem{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px;
+      border-radius:16px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900;
+      color:var(--muted);
+    }
+    .checkItem input{
+      width:auto;
+      margin:0;
+      accent-color:#ff5da8;
     }
 
     .toast{
@@ -629,7 +845,7 @@
       bottom:24px;
       transform:translateX(-50%) translateY(120px);
       opacity:0;
-      z-index:100;
+      z-index:200;
       background:rgba(34,0,21,.86);
       border:1px solid rgba(255,255,255,.18);
       color:#fff;
@@ -641,10 +857,7 @@
       font-weight:900;
       text-align:center;
     }
-    .toast.show{
-      transform:translateX(-50%) translateY(0);
-      opacity:1;
-    }
+    .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
     .confetti{
       position:fixed;
@@ -661,22 +874,20 @@
       background:var(--gold);
       animation:fall 2.4s linear forwards;
     }
-    @keyframes fall{
-      to{transform:translateY(110vh) rotate(760deg);opacity:.2}
-    }
+    @keyframes fall{to{transform:translateY(110vh) rotate(760deg);opacity:.2}}
 
     .hidden{display:none!important}
+    .footer{
+      text-align:center;
+      padding:30px 0 50px;
+      color:var(--muted);
+      font-weight:800;
+    }
 
     @media (max-width: 900px){
-      header{
-        border-radius:24px;
-        align-items:flex-start;
-        flex-direction:column;
-      }
+      header{border-radius:24px;align-items:flex-start;flex-direction:column;padding-left:84px}
       nav{justify-content:flex-start}
-      .hero,.apology,.questionsLayout{
-        grid-template-columns:1fr;
-      }
+      .hero,.apology,.questionsLayout,.adminGrid{grid-template-columns:1fr}
       .phone{transform:none}
       .phoneInner{min-height:440px}
       .grid{grid-template-columns:1fr}
@@ -688,7 +899,10 @@
         gap:8px;
       }
       .qMini{margin:0}
-      .snapFooter{display:block}
+      .answerGrid{grid-template-columns:1fr}
+      .profileBox{grid-template-columns:1fr}
+      .checkGrid{grid-template-columns:1fr 1fr}
+      .nameChoiceBox{grid-template-columns:1fr}
     }
 
     @media (max-width: 520px){
@@ -698,45 +912,232 @@
       .sectionHead h2{font-size:30px}
       .lead,.letter p{font-size:17px}
       .questionList{grid-template-columns:1fr}
-      .snapCard{min-height:430px;padding:20px}
-      .questionText{font-size:31px}
+      .snapCard{min-height:290px;padding:20px}
+      .questionText{font-size:28px}
       button,.btn{width:100%;text-align:center}
       .actions{width:100%}
       .qControls button{width:auto;flex:1}
+      .adminCorner{top:8px;left:8px}
+      .adminTopBtn{padding:9px 10px;font-size:12px}
+      .checkGrid{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
-  <!--
-    طريقة إضافة الملفات:
-    1) حط هذا الملف باسم index.html
-    2) حط الفيديوهات والأغاني في نفس المجلد، أو غيّر الروابط من المتغير MEDIA تحت.
-    3) أسماء مقترحة:
-       eid.mp4
-       love1.mp4
-       love2.mp4
-       love3.mp4
-       apology.mp3
-       love.mp3
-  -->
-
   <div class="hearts" id="hearts"></div>
   <div class="confetti" id="confetti"></div>
   <div class="toast" id="toast">تم</div>
 
+  <div class="adminCorner">
+    <button class="adminTopBtn" onclick="openAdminModal()">⚙️ الإدارة</button>
+  </div>
+
+  <div class="loginScreen" id="loginScreen">
+    <div class="loginCard card">
+      <div class="logo" id="loginLogo" style="margin:0 auto 14px">♥</div>
+      <h2 id="loginTitle">أهلًا يا أجمل شخص ❤️</h2>
+      <p id="loginText">اختاروا مين داخل عشان الإجابة تنحفظ باسمه مباشرة.</p>
+      <div class="nameChoiceBox">
+        <button class="choiceLoginBtn" onclick="selectVisitor('يوري')">أنا يوري ❤️</button>
+        <button class="choiceLoginBtn secondary" onclick="selectVisitor('سيف')">أنا سيف 🤍</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modalOverlay hidden" id="adminModal">
+    <div class="modal card">
+      <div class="modalHead">
+        <h2>لوحة الإدارة الكاملة</h2>
+        <button class="closeBtn" onclick="closeAdminModal()">×</button>
+      </div>
+
+      <div id="adminLoginBox">
+        <div class="statusDot" id="cloudStatus">السحابة غير مفعلة</div>
+        <div class="adminForm">
+          <div class="adminGrid">
+            <input id="adminUsernameInput" placeholder="اسم المدير" value="saif" />
+            <input id="adminPasswordInput" type="password" placeholder="كلمة مرور الإدارة" />
+          </div>
+          <button onclick="adminLogin()">دخول الإدارة</button>
+        </div>
+      </div>
+
+      <div id="adminDashboard" class="hidden">
+        <div class="statusDot ok" id="adminCloudStatus">السحابة مفعلة</div>
+        <div class="currentUserBadge" id="adminInfoBadge">مدير</div>
+
+        <div class="adminTabs" id="adminTabs"></div>
+
+        <div class="adminPanel" id="overviewPanel">
+          <h3>نظرة عامة</h3>
+          <div class="adminGrid">
+            <div class="adminItem"><h4>الأسئلة</h4><p id="statQuestions">0</p></div>
+            <div class="adminItem"><h4>الفيديوهات</h4><p id="statVideos">0</p></div>
+            <div class="adminItem"><h4>الإجابات</h4><p id="statAnswers">0</p></div>
+            <div class="adminItem"><h4>المدراء</h4><p id="statAdmins">0</p></div>
+          </div>
+        </div>
+
+        <div class="adminPanel" id="sitePanel">
+          <h3>إدارة شكل ومحتوى الموقع</h3>
+          <div class="adminForm">
+            <h4>الشعار من الألبوم</h4>
+            <div class="filePicker">
+              اختر صورة الشعار
+              <small>تقدر ترفع صورة بدل القلب الموجود في البداية والهيدر.</small>
+              <input id="siteLogoFile" type="file" accept="image/*" />
+            </div>
+            <div class="currentFileBox" id="currentLogoInfo">لا يوجد شعار مرفوع</div>
+          </div>
+
+          <div class="adminForm">
+            <h4>النصوص الرئيسية</h4>
+            <input id="siteTitleInput" placeholder="عنوان الموقع" />
+            <input id="brandTextInput" placeholder="اسم الهيدر" />
+            <input id="loginTitleInput" placeholder="عنوان شاشة البداية" />
+            <textarea id="loginTextInput" placeholder="نص شاشة البداية"></textarea>
+            <input id="heroTitleInput" placeholder="العنوان الكبير" />
+            <textarea id="heroLeadInput" placeholder="وصف البداية"></textarea>
+            <input id="phoneTitleInput" placeholder="عنوان كرت الجوال" />
+            <textarea id="phoneTextInput" placeholder="نص كرت الجوال"></textarea>
+          </div>
+
+          <div class="adminForm">
+            <h4>نص الاعتذار</h4>
+            <input id="apologyTitleInput" placeholder="عنوان الاعتذار" />
+            <textarea id="apologyP1Input" placeholder="فقرة الاعتذار الأولى"></textarea>
+            <textarea id="apologyP2Input" placeholder="فقرة الاعتذار الثانية"></textarea>
+            <textarea id="apologyQuoteInput" placeholder="الاقتباس"></textarea>
+            <button onclick="saveSiteSettings()">حفظ تغييرات الموقع</button>
+          </div>
+        </div>
+
+        <div class="adminPanel" id="mediaPanel">
+          <h3>إدارة الفيديوهات والأغاني من الألبوم</h3>
+
+          <div class="adminForm">
+            <h4>فيديو العيد</h4>
+            <div class="filePicker">
+              اختر فيديو من الألبوم
+              <input id="eidVideoFile" type="file" accept="video/*" />
+            </div>
+            <div class="currentFileBox" id="currentEidVideoInfo"></div>
+            <button onclick="uploadMainMedia('eidVideo')">رفع وحفظ فيديو العيد</button>
+          </div>
+
+          <div class="adminGrid">
+            <div class="adminForm">
+              <h4>أغنية/فيديو الاعتذار</h4>
+              <div class="filePicker">
+                اختر صوت أو فيديو من الألبوم
+                <input id="apologyMediaFile" type="file" accept="audio/*,video/*" />
+              </div>
+              <div class="currentFileBox" id="currentApologyMediaInfo"></div>
+              <button onclick="uploadMainMedia('apologyMedia')">رفع وحفظ الاعتذار</button>
+            </div>
+
+            <div class="adminForm">
+              <h4>أغنية/فيديو أسئلة الحب</h4>
+              <div class="filePicker">
+                اختر صوت أو فيديو من الألبوم
+                <input id="loveMediaFile" type="file" accept="audio/*,video/*" />
+              </div>
+              <div class="currentFileBox" id="currentLoveMediaInfo"></div>
+              <button onclick="uploadMainMedia('loveMedia')">رفع وحفظ الحب</button>
+            </div>
+          </div>
+
+          <div class="adminForm">
+            <h4>إضافة / تعديل فيديو حب من الألبوم</h4>
+            <input id="videoEditId" type="hidden" />
+            <input id="videoTitleAdmin" placeholder="عنوان الفيديو" />
+            <textarea id="videoNoteAdmin" placeholder="وصف الفيديو"></textarea>
+            <div class="filePicker">
+              اختر الفيديو من الألبوم
+              <input id="loveVideoFileAdmin" type="file" accept="video/*" />
+            </div>
+            <div class="currentFileBox" id="currentLoveVideoInfo">عند التعديل يمكنك تغيير النص بدون اختيار فيديو جديد.</div>
+            <div class="actions">
+              <button onclick="saveLoveVideoAdmin()">حفظ الفيديو</button>
+              <button class="btnSecondary" onclick="clearVideoForm()">تفريغ</button>
+            </div>
+          </div>
+
+          <div id="adminVideosList"></div>
+        </div>
+
+        <div class="adminPanel" id="questionsPanel">
+          <h3>إدارة الأسئلة</h3>
+          <div class="adminForm">
+            <input id="questionEditId" type="hidden" />
+            <textarea id="questionTextAdmin" placeholder="اكتب السؤال هنا"></textarea>
+            <div class="actions">
+              <button onclick="saveQuestionAdmin()">حفظ السؤال</button>
+              <button class="btnSecondary" onclick="clearQuestionForm()">تفريغ</button>
+            </div>
+          </div>
+          <div id="adminQuestionsList"></div>
+        </div>
+
+        <div class="adminPanel" id="answersPanel">
+          <h3>إدارة الإجابات</h3>
+          <div class="adminForm">
+            <button class="dangerBtn" onclick="deleteAllQuestionAnswers()">مسح كل إجابات الأسئلة</button>
+            <button class="dangerBtn" onclick="deleteAllLoveChoices()">مسح إجابات رضيت/ما رضيت</button>
+          </div>
+          <h4>إجابات الأسئلة</h4>
+          <div id="adminAnswersList"></div>
+          <h4>اختيارات رضيت / ما رضيت</h4>
+          <div id="adminLoveChoicesList"></div>
+        </div>
+
+        <div class="adminPanel" id="adminsPanel">
+          <h3>إدارة المدراء والصلاحيات</h3>
+          <div class="adminForm">
+            <input id="adminEditId" type="hidden" />
+            <div class="adminGrid">
+              <input id="newAdminUsername" placeholder="اسم الدخول للمدير" />
+              <input id="newAdminDisplay" placeholder="اسم ظاهر" />
+            </div>
+            <input id="newAdminPassword" type="password" placeholder="كلمة مرور جديدة أو اتركها فارغة عند التعديل" />
+
+            <h4>الصلاحيات</h4>
+            <div class="checkGrid" id="permissionsGrid"></div>
+
+            <div class="actions">
+              <button onclick="saveAdminUser()">حفظ المدير</button>
+              <button class="btnSecondary" onclick="clearAdminForm()">تفريغ</button>
+            </div>
+          </div>
+          <div id="adminUsersList"></div>
+        </div>
+
+        <div class="adminPanel" id="dangerPanel">
+          <h3>إعدادات خطرة</h3>
+          <div class="adminForm">
+            <p style="color:var(--muted);font-weight:800;line-height:1.8">
+              استخدمها بحذر. الحذف هنا يحذف من السحابة.
+            </p>
+            <button class="dangerBtn" onclick="deleteAllQuestionAnswers()">مسح كل إجابات الأسئلة</button>
+            <button class="dangerBtn" onclick="deleteAllLoveChoices()">مسح كل إجابات رضيت/ما رضيت</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="wrap">
     <header>
-      <div class="brand">
-        <div class="logo">♥</div>
-        <div>يوري ❤️ سيف</div>
+      <div class="brand" onclick="location.hash='#home'">
+        <div class="logo siteLogo">♥</div>
+        <div id="brandText">يوري ❤️ سيف</div>
       </div>
       <nav>
         <a href="#eid">تهنئة العيد</a>
         <a href="#memories">فيديوهاتنا</a>
         <a href="#apology">اعتذار</a>
         <a href="#questions">أسئلة الحب</a>
-        <a href="#admin">لوحة سيف</a>
       </nav>
     </header>
 
@@ -744,12 +1145,20 @@
       <section class="hero" id="home">
         <div class="heroText card">
           <div class="eyebrow">🌙 رسالة خاصة جدًا</div>
-          <h1>حبيبتي <span>يوري</span><br>أنا <span>سيف</span></h1>
-          <p class="lead">
-            جهزت لك صفحة صغيرة، بس معناها كبير. فيها تهنئة العيد، وذكريات حب،
-            واعتذار من قلبي لأنك زعلتي اليوم. والله ما كان عندي شبكة، بس قلبي معك طول الوقت.
+          <h1 id="heroTitle">حبيبتي <span>يوري</span><br>أنا <span>سيف</span></h1>
+          <p class="lead" id="heroLead">
+جهزت لك صفحة صغيرة، بس معناها كبير. فيها تهنئة العيد، وذكريات حب،
+واعتذار من قلبي لأنك زعلتي اليوم. والله ما كان عندي شبكة، بس قلبي معك طول الوقت.
           </p>
-          <div class="actions">
+
+          <div class="currentUserBadge" id="currentUserBadge">لم يتم تسجيل الاسم</div>
+
+          <div class="profileBox">
+            <button onclick="selectVisitor('يوري')">تسجيل كـ يوري</button>
+            <button class="btnSecondary" onclick="selectVisitor('سيف')">تسجيل كـ سيف</button>
+          </div>
+
+          <div class="actions" style="margin-top:16px">
             <button onclick="startExperience()">ابدئي الرسالة ❤️</button>
             <a class="btn btnSecondary" href="#apology">روحي للاعتذار</a>
           </div>
@@ -761,10 +1170,10 @@
             <span class="spark" style="left:22%;top:28%;animation-delay:.5s"></span>
             <span class="spark" style="right:32%;bottom:22%;animation-delay:.9s"></span>
             <div class="moon"></div>
-            <h2>عيدك مبارك يا أجمل يوري</h2>
-            <p>
-              كل عام وأنتِ فرحة قلبي، وكل عيد وأنتِ أقرب شخص لروحي.
-              الصفحة هذي كلها لك وحدك.
+            <h2 id="phoneTitle">عيدك مبارك يا أجمل يوري</h2>
+            <p id="phoneText">
+كل عام وأنتِ فرحة قلبي، وكل عيد وأنتِ أقرب شخص لروحي.
+الصفحة هذي كلها لك وحدك.
             </p>
             <a class="btn" href="#eid">افتحي تهنئة العيد</a>
           </div>
@@ -775,14 +1184,12 @@
         <div class="sectionHead">
           <div>
             <h2>تهنئة العيد 🎥</h2>
-            <p>هنا ينحط فيديو التهنئة. غيّر اسم الملف من الكود أو حط فيديو باسم <b>eid.mp4</b>.</p>
+            <p>فيديو التهنئة تضيفه من الألبوم داخل لوحة الإدارة.</p>
           </div>
         </div>
 
         <div class="videoBox card">
-          <video id="eidVideo" controls playsinline preload="metadata" poster="">
-            المتصفح لا يدعم تشغيل الفيديو.
-          </video>
+          <video id="eidVideo" controls playsinline preload="metadata"></video>
         </div>
       </section>
 
@@ -790,7 +1197,7 @@
         <div class="sectionHead">
           <div>
             <h2>فيديوهات الحب والذكريات 💞</h2>
-            <p>أرسل لي الفيديوهات لاحقًا وأركبها لك، أو حطها بنفس الأسماء: love1.mp4 / love2.mp4 / love3.mp4.</p>
+            <p>أي فيديو تضيفه من لوحة الإدارة يظهر هنا للجميع.</p>
           </div>
         </div>
 
@@ -801,28 +1208,28 @@
         <div class="apology">
           <div class="letter card">
             <div class="eyebrow">🥺 اعتذار من القلب</div>
-            <h2>يوري، أنا آسف</h2>
-            <p>
-              حبيبتي يوري، أدري إني زعلتك اليوم لأني ما رسلت لك، وأدري إن الانتظار يوجع لما يكون من شخص تحبينه.
-              بس والله العظيم ما كان تجاهل ولا برود، ما كان عندي شبكة وما قدرت أوصل لك.
+            <h2 id="apologyTitle">يوري، أنا آسف</h2>
+            <p id="apologyP1">
+حبيبتي يوري، أدري إني زعلتك اليوم لأني ما رسلت لك، وأدري إن الانتظار يوجع لما يكون من شخص تحبينه.
+بس والله العظيم ما كان تجاهل ولا برود، ما كان عندي شبكة وما قدرت أوصل لك.
             </p>
-            <p>
-              أنتِ مو شخص عادي عندي، أنتِ راحتي وضحكتي وأجمل جزء في يومي.
-              سامحيني يا أجمل قلب، وخلي العيد يبدأ بيننا بابتسامة منك.
+            <p id="apologyP2">
+أنتِ مو شخص عادي عندي، أنتِ راحتي وضحكتي وأجمل جزء في يومي.
+سامحيني يا أجمل قلب، وخلي العيد يبدأ بيننا بابتسامة منك.
             </p>
-            <div class="quote">
-              وعد مني يا يوري: لو غبت، قلبي ما يغيب عنك. ولو تأخرت رسالة، محبتك ما تتأخر أبدًا.
+            <div class="quote" id="apologyQuote">
+وعد مني يا يوري: لو غبت، قلبي ما يغيب عنك. ولو تأخرت رسالة، محبتك ما تتأخر أبدًا.
             </div>
           </div>
 
           <div class="musicPanel card">
             <div class="disc" id="apologyDisc"></div>
-            <h2 style="margin:0;font-size:32px">أغنية الاعتذار 🎧</h2>
+            <h2 style="margin:0;font-size:32px">أغنية/فيديو الاعتذار 🎧</h2>
             <p style="margin:0;color:var(--muted);font-weight:800;line-height:1.8">
-              حط ملف الأغنية باسم <b>apology.mp3</b>، أو غيّر الرابط من أعلى السكربت.
+              تقدر ترفع صوت أو فيديو من الألبوم داخل الإدارة.
             </p>
-            <audio id="apologyAudio" controls preload="metadata"></audio>
-            <button onclick="playAudio('apologyAudio','apologyDisc')">شغلي الأغنية والاعتذار</button>
+            <div class="mediaPlayer" id="apologyMediaPlayer"></div>
+            <button onclick="playMainMedia('apologyMediaPlayer','apologyDisc')">تشغيل الاعتذار</button>
           </div>
         </div>
 
@@ -830,7 +1237,7 @@
           <h2>رضيتي علي يا يوري؟ 🥹</h2>
           <div class="actions" style="justify-content:center">
             <button onclick="answerLove(true)">رضيت ❤️</button>
-            <button class="noBtn" id="noBtn" onclick="answerLove(false)">لا، باقي زعلانة</button>
+            <button class="dangerBtn" id="noBtn" onclick="answerLove(false)">لا، باقي زعلانة</button>
           </div>
           <div class="choiceResult" id="choiceResult"></div>
         </div>
@@ -839,12 +1246,12 @@
       <section id="questions">
         <div class="sectionHead">
           <div>
-            <h2>أسئلة حب للسناب 💌</h2>
-            <p>20 سؤال. اختاري سؤال، اضغطي تصوير، وبعدها أرسلوها بالسناب وتجاوبون عليها.</p>
+            <h2>أسئلة حب نجاوب عليها 💌</h2>
+            <p>اختاروا السؤال، كل واحد يكتب إجابته، وتظهر إجابة يوري وسيف تحت السؤال.</p>
           </div>
           <div class="musicPanel card" style="padding:14px;min-width:min(100%,360px)">
-            <b>أغنية الحب</b>
-            <audio id="loveAudio" controls preload="metadata"></audio>
+            <b>أغنية/فيديو الحب</b>
+            <div class="mediaPlayer" id="loveMediaPlayer"></div>
           </div>
         </div>
 
@@ -852,71 +1259,50 @@
           <div class="questionList card" id="questionList"></div>
 
           <div class="questionStage card">
-            <div class="snapCard" id="snapCard">
+            <div class="snapCard" id="questionCard">
               <div class="snapTop">
-                <div class="pill" id="questionNumber">سؤال 1 من 20</div>
-                <div class="pill">يوري ❤️ سيف</div>
+                <div class="pill" id="questionNumber">سؤال 1</div>
+                <div class="pill" id="answeringAs">تجاوب باسم: -</div>
               </div>
-
               <div class="questionText" id="questionText"></div>
-
-              <div class="snapFooter">
-                <div class="snapHint">
-                  صوّروا السؤال وارسلونه بالسناب، وكل واحد يجاوب بصراحة وبحب.
-                </div>
-                <div class="pill">عيد + حب + صلح</div>
-              </div>
             </div>
 
             <div class="qControls">
               <button class="smallBtn btnSecondary" onclick="prevQuestion()">السابق</button>
-              <button class="smallBtn" onclick="captureQuestion()">📸 تصوير السؤال</button>
               <button class="smallBtn btnSecondary" onclick="nextQuestion()">التالي</button>
               <button class="smallBtn btnSecondary" onclick="randomQuestion()">عشوائي</button>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="admin">
-        <div class="sectionHead">
-          <div>
-            <h2>لوحة سيف السرية 🔐</h2>
-            <p>من هنا تشوف آخر إجابة اختارتها يوري، وكل الإجابات المحفوظة بالسحابة.</p>
-          </div>
-        </div>
+            <div class="answerBox">
+              <h3 style="margin:0 0 10px">إجابتك</h3>
+              <textarea id="answerText" placeholder="اكتب إجابتك هنا..."></textarea>
+              <div class="actions" style="margin-top:10px">
+                <button onclick="saveQuestionAnswer()">حفظ إجابتي</button>
+                <button class="btnSecondary" onclick="loadMyAnswerIntoBox()">عرض إجابتي للتعديل</button>
+              </div>
 
-        <div class="adminBox card">
-          <div class="statusDot" id="cloudStatus">السحابة غير مفعلة حتى تضيف Firebase</div>
-
-          <div class="adminLogin">
-            <input id="adminPasswordInput" type="password" placeholder="كلمة مرور لوحة سيف" />
-            <button onclick="openAdminPanel()">دخول اللوحة</button>
-          </div>
-
-          <div id="adminContent" class="hidden">
-            <div class="resultCard" id="latestResult">
-              لا توجد نتيجة بعد.
-            </div>
-
-            <h3 style="font-size:24px;margin:22px 0 8px">سجل الإجابات</h3>
-            <div id="resultsList"></div>
-
-            <div class="actions" style="margin-top:18px">
-              <button class="btnSecondary" onclick="loadLocalResults()">عرض آخر نتيجة محفوظة على نفس الجهاز</button>
+              <div class="answerGrid">
+                <div class="personAnswer">
+                  <h3>إجابة يوري</h3>
+                  <p id="yoriAnswer">ما جاوبت للحين.</p>
+                  <div class="answerTime" id="yoriAnswerTime"></div>
+                </div>
+                <div class="personAnswer">
+                  <h3>إجابة سيف</h3>
+                  <p id="saifAnswer">ما جاوب للحين.</p>
+                  <div class="answerTime" id="saifAnswerTime"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
     </main>
 
     <div class="footer">
       صُنعت بحب من سيف إلى يوري ❤️ كل عام وأنتم بخير
     </div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -926,21 +1312,21 @@
       addDoc,
       doc,
       setDoc,
+      getDoc,
+      deleteDoc,
       onSnapshot,
-      query,
-      orderBy,
-      limit,
-      serverTimestamp
+      serverTimestamp,
+      getDocs,
+      writeBatch
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import {
+      getStorage,
+      ref as storageRef,
+      uploadBytes,
+      getDownloadURL,
+      deleteObject
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
-    /*
-      إعداد السحابة:
-      1) افتح Firebase Console
-      2) أنشئ مشروع
-      3) فعّل Firestore Database
-      4) Project settings > Web app
-      5) انسخ firebaseConfig والصقه هنا بدل القيم المكتوبة PUT_HERE
-    */
     const FIREBASE_CONFIG = {
       apiKey: "AIzaSyAiifC3bER_VgmbKW0liUj15MK9ddX1pL0",
       authDomain: "syfttttt.firebaseapp.com",
@@ -951,49 +1337,42 @@
       measurementId: "G-YT9LT1V4ES"
     };
 
-    // غيّر كلمة مرور لوحة سيف من هنا
-    const ADMIN_PASSWORD = "saif2026";
+    const DEFAULT_ROOT_USERNAME = "saif";
+    const DEFAULT_ROOT_PASSWORD = "saif2026";
 
-    const FIREBASE_READY =
-      FIREBASE_CONFIG.apiKey &&
-      FIREBASE_CONFIG.apiKey !== "PUT_HERE" &&
-      FIREBASE_CONFIG.projectId &&
-      FIREBASE_CONFIG.projectId !== "PUT_HERE";
+    const PERMISSIONS = [
+      { key:"overview", label:"نظرة عامة" },
+      { key:"site", label:"تعديل الموقع" },
+      { key:"media", label:"الفيديوهات والأغاني" },
+      { key:"questions", label:"الأسئلة" },
+      { key:"answers", label:"الإجابات" },
+      { key:"admins", label:"المدراء والصلاحيات" },
+      { key:"danger", label:"الإعدادات الخطرة" }
+    ];
 
-    let db = null;
-    if (FIREBASE_READY) {
-      try {
-        const app = initializeApp(FIREBASE_CONFIG);
-        db = getFirestore(app);
-      } catch (error) {
-        console.error("Firebase init error:", error);
-      }
-    }
-
-    // نخلي الدوال متاحة للأزرار لأنها داخل module
-    window.startExperience = startExperience;
-    window.playAudio = playAudio;
-    window.answerLove = answerLove;
-    window.prevQuestion = prevQuestion;
-    window.nextQuestion = nextQuestion;
-    window.randomQuestion = randomQuestion;
-    window.captureQuestion = captureQuestion;
-    window.openAdminPanel = openAdminPanel;
-    window.loadLocalResults = loadLocalResults;
-
-    // عدّل الروابط هنا فقط
-    const MEDIA = {
-      eidVideo: "eid.mp4",
-      loveVideos: [
-        { title: "فيديو الحب الأول", note: "أول ذكرى حلوة ليوري.", src: "love1.mp4" },
-        { title: "فيديو الحب الثاني", note: "رسالة بسيطة بس من القلب.", src: "love2.mp4" },
-        { title: "فيديو الحب الثالث", note: "كل لحظة بيننا عيد.", src: "love3.mp4" }
-      ],
-      apologySong: "apology.mp3",
-      loveSong: "love.mp3"
+    const DEFAULT_SITE = {
+      siteTitle: "يوري ❤️ من سيف",
+      brandText: "يوري ❤️ سيف",
+      loginTitle: "أهلًا يا أجمل شخص ❤️",
+      loginText: "اختاروا مين داخل عشان الإجابة تنحفظ باسمه مباشرة.",
+      heroTitle: "حبيبتي <span>يوري</span><br>أنا <span>سيف</span>",
+      heroLead: "جهزت لك صفحة صغيرة، بس معناها كبير. فيها تهنئة العيد، وذكريات حب،\\nواعتذار من قلبي لأنك زعلتي اليوم. والله ما كان عندي شبكة، بس قلبي معك طول الوقت.",
+      phoneTitle: "عيدك مبارك يا أجمل يوري",
+      phoneText: "كل عام وأنتِ فرحة قلبي، وكل عيد وأنتِ أقرب شخص لروحي.\\nالصفحة هذي كلها لك وحدك.",
+      apologyTitle: "يوري، أنا آسف",
+      apologyP1: "حبيبتي يوري، أدري إني زعلتك اليوم لأني ما رسلت لك، وأدري إن الانتظار يوجع لما يكون من شخص تحبينه.\\nبس والله العظيم ما كان تجاهل ولا برود، ما كان عندي شبكة وما قدرت أوصل لك.",
+      apologyP2: "أنتِ مو شخص عادي عندي، أنتِ راحتي وضحكتي وأجمل جزء في يومي.\\nسامحيني يا أجمل قلب، وخلي العيد يبدأ بيننا بابتسامة منك.",
+      apologyQuote: "وعد مني يا يوري: لو غبت، قلبي ما يغيب عنك. ولو تأخرت رسالة، محبتك ما تتأخر أبدًا.",
+      logo: null
     };
 
-    const QUESTIONS = [
+    const DEFAULT_MEDIA = {
+      eidVideo: { url:"eid.mp4", name:"eid.mp4", type:"video/mp4", path:"" },
+      apologyMedia: { url:"apology.mp3", name:"apology.mp3", type:"audio/mpeg", path:"" },
+      loveMedia: { url:"love.mp3", name:"love.mp3", type:"audio/mpeg", path:"" }
+    };
+
+    const DEFAULT_QUESTIONS = [
       "وش أكثر لحظة حسّيتي فيها إني أحبك بصدق؟",
       "وش الشيء اللي تبغينه مني لما تزعلين؟",
       "لو بنعيد أول يوم عرفنا بعض، وش بتقولين لي؟",
@@ -1014,9 +1393,65 @@
       "وش الشيء اللي يخليك تقولين: هذا سيف حقي؟",
       "لو العيد أمنية، وش أمنيتك لنا؟",
       "آخر سؤال: سامحتيني من قلبك؟"
-    ];
+    ].map((text, index) => ({ id: "q" + (index + 1), text, order: index + 1 }));
 
-    let currentQuestion = 0;
+    let app = null;
+    let db = null;
+    let storage = null;
+
+    try{
+      app = initializeApp(FIREBASE_CONFIG);
+      db = getFirestore(app);
+      storage = getStorage(app);
+    }catch(error){
+      console.error("Firebase init error:", error);
+    }
+
+    let currentProfile = null;
+    let currentAdmin = null;
+    let siteSettings = {...DEFAULT_SITE};
+    let mediaSettings = JSON.parse(JSON.stringify(DEFAULT_MEDIA));
+    let questions = [...DEFAULT_QUESTIONS];
+    let loveVideos = [];
+    let answersByQuestion = {};
+    let loveChoices = [];
+    let admins = [];
+    let currentQuestionIndex = 0;
+    let unsubscribers = [];
+
+    window.openAdminModal = openAdminModal;
+    window.closeAdminModal = closeAdminModal;
+    window.adminLogin = adminLogin;
+    window.switchAdminTab = switchAdminTab;
+    window.selectVisitor = selectVisitor;
+    window.saveVisitorProfile = saveVisitorProfile;
+    window.updateProfileInline = updateProfileInline;
+    window.startExperience = startExperience;
+    window.playMainMedia = playMainMedia;
+    window.answerLove = answerLove;
+    window.prevQuestion = prevQuestion;
+    window.nextQuestion = nextQuestion;
+    window.randomQuestion = randomQuestion;
+    window.saveQuestionAnswer = saveQuestionAnswer;
+    window.loadMyAnswerIntoBox = loadMyAnswerIntoBox;
+    window.saveSiteSettings = saveSiteSettings;
+    window.uploadMainMedia = uploadMainMedia;
+    window.saveLoveVideoAdmin = saveLoveVideoAdmin;
+    window.clearVideoForm = clearVideoForm;
+    window.editVideoAdmin = editVideoAdmin;
+    window.deleteVideoAdmin = deleteVideoAdmin;
+    window.saveQuestionAdmin = saveQuestionAdmin;
+    window.clearQuestionForm = clearQuestionForm;
+    window.editQuestionAdmin = editQuestionAdmin;
+    window.deleteQuestionAdmin = deleteQuestionAdmin;
+    window.deleteAnswerAdmin = deleteAnswerAdmin;
+    window.deleteLoveChoiceAdmin = deleteLoveChoiceAdmin;
+    window.deleteAllQuestionAnswers = deleteAllQuestionAnswers;
+    window.deleteAllLoveChoices = deleteAllLoveChoices;
+    window.saveAdminUser = saveAdminUser;
+    window.editAdminUser = editAdminUser;
+    window.deleteAdminUser = deleteAdminUser;
+    window.clearAdminForm = clearAdminForm;
 
     function qs(id){ return document.getElementById(id); }
 
@@ -1027,197 +1462,1155 @@
       setTimeout(() => toast.classList.remove("show"), 2600);
     }
 
+    function cleanId(value){
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "_")
+        .replace(/[^\w\u0600-\u06FF-]/g, "_");
+    }
+
+    async function sha256(text){
+      const data = new TextEncoder().encode(String(text));
+      const hash = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,"0")).join("");
+    }
+
+    function detectRoleFromName(name){
+      const clean = String(name || "").trim();
+      if(clean.includes("سيف") || clean.toLowerCase().includes("saif")) return "سيف";
+      if(clean.includes("يوري") || clean.toLowerCase().includes("yori")) return "يوري";
+      return "ضيف";
+    }
+
+    function selectVisitor(name){
+      currentProfile = { name, role: name };
+      localStorage.setItem("yori_saif_profile_v4", JSON.stringify(currentProfile));
+      qs("loginScreen").classList.add("hidden");
+      updateProfileUi();
+      showToast(`تم الدخول باسم ${name} ❤️`);
+    }
+
+    function saveVisitorProfile(){
+      showToast("اختار يوري أو سيف فقط");
+    }
+
+    function updateProfileInline(){
+      showToast("اختار يوري أو سيف من الأزرار فقط");
+    }
+
+    function loadProfile(){
+      try{
+        const raw = localStorage.getItem("yori_saif_profile_v4");
+        if(raw){
+          currentProfile = JSON.parse(raw);
+          qs("loginScreen").classList.add("hidden");
+        }
+      }catch(e){}
+      updateProfileUi();
+    }
+
+    function updateProfileUi(){
+      const label = currentProfile ? `داخل باسم: ${currentProfile.name}` : "لم يتم اختيار الدخول";
+      qs("currentUserBadge").textContent = label;
+      qs("answeringAs").textContent = currentProfile ? `تجاوب باسم: ${currentProfile.name}` : "تجاوب باسم: -";
+    }
+
     function startExperience(){
       location.hash = "#eid";
-      const vid = qs("eidVideo");
-      vid.play().catch(() => {});
+      qs("eidVideo").play().catch(() => {});
       showToast("شغّلي الفيديو وكملي الرسالة يا يوري ❤️");
     }
 
-    function playAudio(audioId, discId){
-      const audio = qs(audioId);
+    function playMainMedia(containerId, discId){
+      const player = qs(containerId).querySelector("audio,video");
       const disc = qs(discId);
-      audio.play().then(() => {
+      if(!player){
+        showToast("ما فيه ملف مرفوع");
+        return;
+      }
+      player.play().then(() => {
         if(disc) disc.classList.add("playing");
-      }).catch(() => {
-        showToast("اضغطي تشغيل من مشغل الصوت لو المتصفح منع التشغيل");
-      });
+      }).catch(() => showToast("اضغط تشغيل من المشغل لو المتصفح منع التشغيل"));
     }
 
-    function setMedia(){
-      qs("eidVideo").src = MEDIA.eidVideo;
-      qs("apologyAudio").src = MEDIA.apologySong;
-      qs("loveAudio").src = MEDIA.loveSong;
+    function renderMediaPlayer(containerId, media){
+      const el = qs(containerId);
+      if(!media || !media.url){
+        el.innerHTML = `<div class="currentFileBox">لا يوجد ملف مرفوع</div>`;
+        return;
+      }
 
+      const url = escapeAttr(media.url);
+      const type = String(media.type || "");
+      if(type.startsWith("video/")){
+        el.innerHTML = `<video controls playsinline preload="metadata" src="${url}"></video>`;
+      }else{
+        el.innerHTML = `<audio controls preload="metadata" src="${url}"></audio>`;
+      }
+
+      const player = el.querySelector("audio,video");
+      if(containerId === "apologyMediaPlayer" && player){
+        player.addEventListener("pause", () => qs("apologyDisc").classList.remove("playing"));
+        player.addEventListener("play", () => qs("apologyDisc").classList.add("playing"));
+      }
+    }
+
+    function applySiteSettings(){
+      document.title = siteSettings.siteTitle || DEFAULT_SITE.siteTitle;
+      qs("brandText").textContent = siteSettings.brandText || DEFAULT_SITE.brandText;
+      qs("loginTitle").textContent = siteSettings.loginTitle || DEFAULT_SITE.loginTitle;
+      qs("loginText").textContent = siteSettings.loginText || DEFAULT_SITE.loginText;
+      qs("heroTitle").innerHTML = siteSettings.heroTitle || DEFAULT_SITE.heroTitle;
+      qs("heroLead").textContent = siteSettings.heroLead || DEFAULT_SITE.heroLead;
+      qs("phoneTitle").textContent = siteSettings.phoneTitle || DEFAULT_SITE.phoneTitle;
+      qs("phoneText").textContent = siteSettings.phoneText || DEFAULT_SITE.phoneText;
+      qs("apologyTitle").textContent = siteSettings.apologyTitle || DEFAULT_SITE.apologyTitle;
+      qs("apologyP1").textContent = siteSettings.apologyP1 || DEFAULT_SITE.apologyP1;
+      qs("apologyP2").textContent = siteSettings.apologyP2 || DEFAULT_SITE.apologyP2;
+      qs("apologyQuote").textContent = siteSettings.apologyQuote || DEFAULT_SITE.apologyQuote;
+
+      document.querySelectorAll(".siteLogo").forEach(logo => setLogoElement(logo));
+      setLogoElement(qs("loginLogo"));
+
+      fillSiteForm();
+    }
+
+    function setLogoElement(el){
+      if(siteSettings.logo?.url){
+        el.innerHTML = `<img src="${escapeAttr(siteSettings.logo.url)}" alt="logo">`;
+      }else{
+        el.textContent = "♥";
+      }
+    }
+
+    function fillSiteForm(){
+      if(!qs("siteTitleInput")) return;
+      qs("siteTitleInput").value = siteSettings.siteTitle || "";
+      qs("brandTextInput").value = siteSettings.brandText || "";
+      qs("loginTitleInput").value = siteSettings.loginTitle || "";
+      qs("loginTextInput").value = siteSettings.loginText || "";
+      qs("heroTitleInput").value = siteSettings.heroTitle || "";
+      qs("heroLeadInput").value = siteSettings.heroLead || "";
+      qs("phoneTitleInput").value = siteSettings.phoneTitle || "";
+      qs("phoneTextInput").value = siteSettings.phoneText || "";
+      qs("apologyTitleInput").value = siteSettings.apologyTitle || "";
+      qs("apologyP1Input").value = siteSettings.apologyP1 || "";
+      qs("apologyP2Input").value = siteSettings.apologyP2 || "";
+      qs("apologyQuoteInput").value = siteSettings.apologyQuote || "";
+      qs("currentLogoInfo").textContent = siteSettings.logo?.name ? `الشعار الحالي: ${siteSettings.logo.name}` : "لا يوجد شعار مرفوع";
+    }
+
+    function applyMediaSettings(){
+      qs("eidVideo").src = mediaSettings.eidVideo?.url || DEFAULT_MEDIA.eidVideo.url;
+      renderMediaPlayer("apologyMediaPlayer", mediaSettings.apologyMedia);
+      renderMediaPlayer("loveMediaPlayer", mediaSettings.loveMedia);
+      renderMainMediaAdminInfo();
+    }
+
+    function renderMainMediaAdminInfo(){
+      if(!qs("currentEidVideoInfo")) return;
+      qs("currentEidVideoInfo").textContent = mediaSettings.eidVideo?.name ? `الحالي: ${mediaSettings.eidVideo.name}` : "لا يوجد ملف";
+      qs("currentApologyMediaInfo").textContent = mediaSettings.apologyMedia?.name ? `الحالي: ${mediaSettings.apologyMedia.name}` : "لا يوجد ملف";
+      qs("currentLoveMediaInfo").textContent = mediaSettings.loveMedia?.name ? `الحالي: ${mediaSettings.loveMedia.name}` : "لا يوجد ملف";
+    }
+
+    function renderLoveVideos(){
       const grid = qs("loveVideosGrid");
       grid.innerHTML = "";
-      MEDIA.loveVideos.forEach((item, index) => {
-        const card = document.createElement("div");
-        card.className = "memory card";
-        card.innerHTML = `
-          <video controls playsinline preload="metadata" src="${item.src}"></video>
-          <h3>${item.title}</h3>
-          <p>${item.note}</p>
-        `;
-        grid.appendChild(card);
-      });
 
-      qs("apologyAudio").addEventListener("pause", () => qs("apologyDisc").classList.remove("playing"));
-      qs("apologyAudio").addEventListener("play", () => qs("apologyDisc").classList.add("playing"));
+      if(!loveVideos.length){
+        grid.innerHTML = `<div class="memory card"><h3>ما فيه فيديوهات بعد</h3><p>أضف الفيديوهات من لوحة الإدارة.</p></div>`;
+        return;
+      }
+
+      loveVideos
+        .slice()
+        .sort((a,b) => (a.order || 0) - (b.order || 0))
+        .forEach(item => {
+          const card = document.createElement("div");
+          card.className = "memory card";
+          card.innerHTML = `
+            <video controls playsinline preload="metadata" src="${escapeAttr(item.video?.url || "")}"></video>
+            <h3>${escapeHtml(item.title || "فيديو")}</h3>
+            <p>${escapeHtml(item.note || "")}</p>
+          `;
+          grid.appendChild(card);
+        });
     }
 
-    async function answerLove(ok){
-      const result = qs("choiceResult");
-      const text = ok ? "رضيت ❤️" : "ما رضيت / باقي زعلانة 🥺";
+    function renderQuestions(){
+      const list = qs("questionList");
+      list.innerHTML = "";
 
-      await saveYoriAnswer({
-        answer: text,
-        accepted: ok,
-        message: ok ? "يوري رضيت على سيف" : "يوري باقي زعلانة من سيف",
-        page: location.href,
-        userAgent: navigator.userAgent,
-        localTime: new Date().toLocaleString("ar-SA")
+      if(!questions.length){
+        qs("questionText").textContent = "لا توجد أسئلة بعد. أضف سؤال من لوحة الإدارة.";
+        qs("questionNumber").textContent = "لا يوجد سؤال";
+        return;
+      }
+
+      if(currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
+
+      sortedQuestions().forEach((q, i) => {
+        const btn = document.createElement("button");
+        btn.className = "qMini" + (i === currentQuestionIndex ? " active" : "");
+        btn.textContent = `${i+1}. ${q.text}`;
+        btn.onclick = () => setQuestion(i);
+        list.appendChild(btn);
       });
 
+      updateQuestionCard();
+    }
+
+    function sortedQuestions(){
+      return questions.slice().sort((a,b) => (a.order || 0) - (b.order || 0));
+    }
+
+    function currentQuestion(){
+      return sortedQuestions()[currentQuestionIndex];
+    }
+
+    function setQuestion(i){
+      currentQuestionIndex = (i + questions.length) % questions.length;
+      qs("answerText").value = "";
+      renderQuestions();
+      updateAnswersUi();
+    }
+
+    function updateQuestionCard(){
+      const q = currentQuestion();
+      if(!q) return;
+      qs("questionNumber").textContent = `سؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+      qs("questionText").textContent = q.text;
+      updateAnswersUi();
+    }
+
+    function nextQuestion(){ if(questions.length) setQuestion(currentQuestionIndex + 1); }
+    function prevQuestion(){ if(questions.length) setQuestion(currentQuestionIndex - 1); }
+    function randomQuestion(){ if(questions.length) setQuestion(Math.floor(Math.random() * questions.length)); }
+
+    async function answerLove(ok){
+      const payload = {
+        answer: ok ? "رضيت ❤️" : "ما رضيت / باقي زعلانة 🥺",
+        accepted: ok,
+        name: currentProfile?.name || "بدون اسم",
+        role: currentProfile?.role || "غير محدد",
+        message: ok ? "رضيت" : "باقي زعلانة",
+        createdAtText: new Date().toLocaleString("ar-SA"),
+        createdAtMs: Date.now(),
+        createdAt: serverTimestamp()
+      };
+
+      if(db){
+        try{
+          await addDoc(collection(db, "yori_saif_love_choices"), payload);
+          await setDoc(doc(db, "yori_saif_private", "latest_answer"), payload);
+          showToast("تم حفظ الإجابة بالسحابة ❤️");
+        }catch(error){
+          console.error(error);
+          showToast("تعذر حفظ الاختيار بالسحابة");
+        }
+      }
+
+      const result = qs("choiceResult");
       if(ok){
-        result.innerHTML = "يا أجمل خبر 😭❤️ خلاص العيد صار عيدين، رضى يوري بالدنيا كلها. <br>تم حفظ الإجابة لسيف.";
+        result.innerHTML = "يا أجمل خبر 😭❤️ خلاص العيد صار عيدين، رضى يوري بالدنيا كلها.";
         makeConfetti();
         setTimeout(() => location.hash = "#questions", 900);
       }else{
-        result.innerHTML = "طيب أعطيني فرصة أخيرة 🥺 ادخلي أسئلة الحب، وبجاوبك بكل صدق لين ترضين. <br>تم حفظ الإجابة لسيف.";
+        result.innerHTML = "طيب أعطيني فرصة أخيرة 🥺 ادخلي أسئلة الحب، وبجاوبك بكل صدق لين ترضين.";
         const no = qs("noBtn");
         no.style.transform = `translate(${Math.random()*30-15}px, ${Math.random()*20-10}px)`;
       }
     }
 
-    async function saveYoriAnswer(data){
+    async function saveQuestionAnswer(){
+      if(!currentProfile){
+        qs("loginScreen").classList.remove("hidden");
+        showToast("سجل اسمك أول");
+        return;
+      }
+
+      const q = currentQuestion();
+      if(!q){
+        showToast("ما فيه سؤال");
+        return;
+      }
+
+      const text = qs("answerText").value.trim();
+      if(!text){
+        showToast("اكتب إجابتك أول");
+        return;
+      }
+
+      const roleKey = normalizeRole(currentProfile.role);
+      if(roleKey === "guest"){
+        showToast("لازم تدخل باسم يوري أو سيف");
+        return;
+      }
+
       const payload = {
-        ...data,
+        questionId: q.id,
+        questionText: q.text,
+        role: currentProfile.role,
+        roleKey,
+        name: currentProfile.name,
+        answer: text,
         createdAtText: new Date().toLocaleString("ar-SA"),
-        createdAtMs: Date.now()
+        createdAtMs: Date.now(),
+        updatedAt: serverTimestamp()
       };
 
-      localStorage.setItem("yori_latest_answer", JSON.stringify(payload));
+      answersByQuestion[q.id] = answersByQuestion[q.id] || {};
+      answersByQuestion[q.id][roleKey] = payload;
+      updateAnswersUi();
 
       if(!db){
-        showToast("انحفظت على الجهاز فقط، فعّل Firebase للحفظ السحابي");
+        showToast("السحابة غير مفعلة");
         return;
       }
 
       try{
-        const cloudPayload = {
-          ...payload,
-          createdAt: serverTimestamp()
-        };
-
-        await addDoc(collection(db, "yori_saif_answers"), cloudPayload);
-        await setDoc(doc(db, "yori_saif_private", "latest_answer"), cloudPayload);
-        showToast("تم حفظ الإجابة بالسحابة ❤️");
+        await setDoc(doc(db, "yori_saif_question_answers", `${q.id}_${roleKey}`), payload);
+        showToast("تم حفظ إجابتك بالسحابة ❤️");
       }catch(error){
-        console.error("Save answer error:", error);
-        showToast("ما انحفظت بالسحابة، تأكد من قواعد Firestore");
+        console.error(error);
+        showToast("تعذر حفظ الإجابة بالسحابة");
       }
     }
 
-    function openAdminPanel(){
-      const input = qs("adminPasswordInput");
-      if(input.value !== ADMIN_PASSWORD){
-        showToast("كلمة المرور غلط");
-        return;
-      }
-
-      qs("adminContent").classList.remove("hidden");
-      showToast("تم فتح لوحة سيف");
-      subscribeCloudResults();
-      loadLocalResults();
+    function normalizeRole(role){
+      if(role === "سيف") return "saif";
+      if(role === "يوري") return "yori";
+      return "guest";
     }
 
-    function subscribeCloudResults(){
-      const status = qs("cloudStatus");
+    function updateAnswersUi(){
+      const q = currentQuestion();
+      if(!q) return;
 
-      if(!db){
-        status.textContent = "السحابة غير مفعلة: أضف Firebase config في أعلى الكود";
-        status.classList.remove("ok");
+      const bucket = answersByQuestion[q.id] || {};
+      const yori = bucket.yori;
+      const saif = bucket.saif;
+
+      qs("yoriAnswer").textContent = yori?.answer || "ما جاوبت للحين.";
+      qs("yoriAnswerTime").textContent = yori ? `${yori.name || "يوري"} — ${yori.createdAtText || ""}` : "";
+
+      qs("saifAnswer").textContent = saif?.answer || "ما جاوب للحين.";
+      qs("saifAnswerTime").textContent = saif ? `${saif.name || "سيف"} — ${saif.createdAtText || ""}` : "";
+    }
+
+    function loadMyAnswerIntoBox(){
+      const q = currentQuestion();
+      if(!q || !currentProfile) return;
+      const roleKey = normalizeRole(currentProfile.role);
+      qs("answerText").value = answersByQuestion[q.id]?.[roleKey]?.answer || "";
+      showToast("تم عرض إجابتك للتعديل");
+    }
+
+    function openAdminModal(){
+      qs("adminModal").classList.remove("hidden");
+      updateCloudStatus(!!db);
+      if(currentAdmin) renderAdminAll();
+    }
+
+    function closeAdminModal(){
+      qs("adminModal").classList.add("hidden");
+    }
+
+    async function adminLogin(){
+      const usernameRaw = qs("adminUsernameInput").value.trim();
+      const password = qs("adminPasswordInput").value;
+      const username = cleanId(usernameRaw);
+
+      if(!username || !password){
+        showToast("اكتب اسم المدير وكلمة المرور");
         return;
       }
 
-      status.textContent = "السحابة مفعلة وجاري قراءة النتائج";
-      status.classList.add("ok");
+      try{
+        const passwordHash = await sha256(password);
+        let adminDoc = null;
 
-      const latestRef = doc(db, "yori_saif_private", "latest_answer");
-      onSnapshot(latestRef, (snap) => {
-        if(snap.exists()){
-          renderLatestResult(snap.data(), "آخر إجابة من السحابة");
+        if(db){
+          const snap = await getDoc(doc(db, "yori_saif_admins", username));
+          if(snap.exists()) adminDoc = { id:snap.id, ...snap.data() };
         }
-      }, (error) => {
-        console.error("Latest snapshot error:", error);
-        status.textContent = "خطأ في قراءة السحابة، تأكد من قواعد Firestore";
-        status.classList.remove("ok");
-      });
 
-      const q = query(
-        collection(db, "yori_saif_answers"),
-        orderBy("createdAtMs", "desc"),
-        limit(20)
-      );
-
-      onSnapshot(q, (snapshot) => {
-        const list = qs("resultsList");
-        list.innerHTML = "";
-        if(snapshot.empty){
-          list.innerHTML = `<div class="resultCard">ما فيه إجابات محفوظة بالسحابة حتى الآن.</div>`;
+        if(username === DEFAULT_ROOT_USERNAME && !adminDoc && password === DEFAULT_ROOT_PASSWORD){
+          currentAdmin = {
+            id: DEFAULT_ROOT_USERNAME,
+            username: DEFAULT_ROOT_USERNAME,
+            displayName: "سيف",
+            root: true,
+            permissions: allPermissions()
+          };
+          await ensureRootAdmin();
+        }else if(adminDoc && adminDoc.passwordHash === passwordHash){
+          currentAdmin = {
+            ...adminDoc,
+            root: !!adminDoc.root,
+            permissions: adminDoc.root ? allPermissions() : (adminDoc.permissions || {})
+          };
+        }else{
+          showToast("بيانات الإدارة غلط");
           return;
         }
 
-        snapshot.forEach((docSnap) => {
-          const item = docSnap.data();
-          const div = document.createElement("div");
-          div.className = "resultCard";
-          div.innerHTML = `
-            <b>الإجابة:</b> ${escapeHtml(item.answer || "غير معروف")}<br>
-            <b>الوقت:</b> ${escapeHtml(item.createdAtText || item.localTime || "غير معروف")}<br>
-            <b>الرسالة:</b> ${escapeHtml(item.message || "")}
-          `;
-          list.appendChild(div);
-        });
-      }, (error) => {
-        console.error("Results snapshot error:", error);
-        qs("resultsList").innerHTML = `<div class="resultCard">تعذر قراءة السجل من السحابة. تأكد من قواعد Firestore.</div>`;
-      });
+        qs("adminLoginBox").classList.add("hidden");
+        qs("adminDashboard").classList.remove("hidden");
+        qs("adminInfoBadge").textContent = `داخل كـ ${currentAdmin.displayName || currentAdmin.username}`;
+        renderAdminAll();
+        showToast("تم فتح الإدارة");
+      }catch(error){
+        console.error(error);
+        showToast("خطأ في تسجيل الدخول");
+      }
     }
 
-    function renderLatestResult(item, title){
-      qs("latestResult").innerHTML = `
-        <b>${title}</b><br>
-        <b>الإجابة:</b> ${escapeHtml(item.answer || "غير معروف")}<br>
-        <b>الوقت:</b> ${escapeHtml(item.createdAtText || item.localTime || "غير معروف")}<br>
-        <b>الرسالة:</b> ${escapeHtml(item.message || "")}
-      `;
-    }
-
-    function loadLocalResults(){
-      const raw = localStorage.getItem("yori_latest_answer");
-      if(!raw){
-        if(!qs("latestResult").innerHTML.trim() || qs("latestResult").textContent.includes("لا توجد")){
-          qs("latestResult").innerHTML = "لا توجد نتيجة محفوظة على هذا الجهاز.";
+    async function ensureRootAdmin(){
+      if(!db) return;
+      try{
+        const ref = doc(db, "yori_saif_admins", DEFAULT_ROOT_USERNAME);
+        const snap = await getDoc(ref);
+        if(!snap.exists()){
+          await setDoc(ref, {
+            username: DEFAULT_ROOT_USERNAME,
+            displayName: "سيف",
+            root: true,
+            passwordHash: await sha256(DEFAULT_ROOT_PASSWORD),
+            permissions: allPermissions(),
+            createdAt: serverTimestamp()
+          });
         }
+      }catch(e){
+        console.error(e);
+      }
+    }
+
+    function allPermissions(){
+      const p = {};
+      PERMISSIONS.forEach(x => p[x.key] = true);
+      return p;
+    }
+
+    function hasPerm(key){
+      return !!(currentAdmin?.root || currentAdmin?.permissions?.[key]);
+    }
+
+    function requirePerm(key){
+      if(!hasPerm(key)){
+        showToast("ما عندك صلاحية");
+        return false;
+      }
+      return true;
+    }
+
+    function renderAdminTabs(){
+      const tabs = qs("adminTabs");
+      tabs.innerHTML = "";
+      PERMISSIONS.forEach((p, index) => {
+        if(!hasPerm(p.key)) return;
+        const btn = document.createElement("button");
+        btn.className = "tabBtn";
+        btn.dataset.tab = p.key;
+        btn.textContent = p.label;
+        btn.onclick = () => switchAdminTab(p.key);
+        tabs.appendChild(btn);
+      });
+
+      const first = tabs.querySelector(".tabBtn");
+      if(first && !document.querySelector(".adminPanel.active")){
+        switchAdminTab(first.dataset.tab);
+      }
+    }
+
+    function switchAdminTab(tab){
+      if(!hasPerm(tab)){
+        showToast("ما عندك صلاحية");
+        return;
+      }
+      document.querySelectorAll(".tabBtn").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tab));
+      document.querySelectorAll(".adminPanel").forEach(panel => panel.classList.remove("active"));
+      qs(tab + "Panel").classList.add("active");
+      renderAdminAll(false);
+    }
+
+    function renderAdminAll(resetTab = TrueLike()){
+      if(!currentAdmin) return;
+      renderAdminTabs();
+      if(resetTab){
+        const active = document.querySelector(".adminPanel.active");
+        if(!active){
+          const first = qs("adminTabs").querySelector(".tabBtn");
+          if(first) switchAdminTab(first.dataset.tab);
+        }
+      }
+
+      renderStats();
+      renderAdminQuestions();
+      renderAdminVideos();
+      renderAdminAnswers();
+      renderAdminLoveChoices();
+      renderAdminUsers();
+      fillSiteForm();
+      renderMainMediaAdminInfo();
+      renderPermissionsGrid();
+    }
+
+    function TrueLike(){ return true; }
+
+    function renderStats(){
+      qs("statQuestions").textContent = questions.length;
+      qs("statVideos").textContent = loveVideos.length;
+      let count = 0;
+      Object.values(answersByQuestion).forEach(bucket => count += Object.keys(bucket).length);
+      qs("statAnswers").textContent = count;
+      qs("statAdmins").textContent = admins.length || (currentAdmin ? 1 : 0);
+    }
+
+    async function saveSiteSettings(){
+      if(!requirePerm("site")) return;
+
+      let logo = siteSettings.logo || null;
+      const logoFile = qs("siteLogoFile").files[0];
+      if(logoFile){
+        showToast("جاري رفع الشعار...");
+        if(logo?.path) await safeDeleteStorage(logo.path);
+        logo = await uploadFileToStorage(logoFile, "site/logo");
+      }
+
+      const payload = {
+        siteTitle: qs("siteTitleInput").value.trim() || DEFAULT_SITE.siteTitle,
+        brandText: qs("brandTextInput").value.trim() || DEFAULT_SITE.brandText,
+        loginTitle: qs("loginTitleInput").value.trim() || DEFAULT_SITE.loginTitle,
+        loginText: qs("loginTextInput").value.trim() || DEFAULT_SITE.loginText,
+        heroTitle: qs("heroTitleInput").value.trim() || DEFAULT_SITE.heroTitle,
+        heroLead: qs("heroLeadInput").value.trim() || DEFAULT_SITE.heroLead,
+        phoneTitle: qs("phoneTitleInput").value.trim() || DEFAULT_SITE.phoneTitle,
+        phoneText: qs("phoneTextInput").value.trim() || DEFAULT_SITE.phoneText,
+        apologyTitle: qs("apologyTitleInput").value.trim() || DEFAULT_SITE.apologyTitle,
+        apologyP1: qs("apologyP1Input").value.trim() || DEFAULT_SITE.apologyP1,
+        apologyP2: qs("apologyP2Input").value.trim() || DEFAULT_SITE.apologyP2,
+        apologyQuote: qs("apologyQuoteInput").value.trim() || DEFAULT_SITE.apologyQuote,
+        logo,
+        updatedAt: serverTimestamp()
+      };
+
+      siteSettings = { ...DEFAULT_SITE, ...payload };
+      applySiteSettings();
+
+      if(db){
+        try{
+          await setDoc(doc(db, "yori_saif_settings", "site"), payload);
+          qs("siteLogoFile").value = "";
+          showToast("تم حفظ الموقع");
+        }catch(error){
+          console.error(error);
+          showToast("تعذر حفظ الموقع");
+        }
+      }
+    }
+
+    async function uploadMainMedia(kind){
+      if(!requirePerm("media")) return;
+
+      const map = {
+        eidVideo: { input:"eidVideoFile", folder:"main/eid", label:"فيديو العيد" },
+        apologyMedia: { input:"apologyMediaFile", folder:"main/apology", label:"الاعتذار" },
+        loveMedia: { input:"loveMediaFile", folder:"main/love", label:"الحب" }
+      };
+      const item = map[kind];
+      const file = qs(item.input).files[0];
+
+      if(!file){
+        showToast("اختر ملف من الألبوم أول");
         return;
       }
 
       try{
-        renderLatestResult(JSON.parse(raw), "آخر إجابة محفوظة على هذا الجهاز");
-      }catch(e){
-        qs("latestResult").innerHTML = "تعذر قراءة النتيجة المحلية.";
+        showToast(`جاري رفع ${item.label}...`);
+        if(mediaSettings[kind]?.path) await safeDeleteStorage(mediaSettings[kind].path);
+
+        const uploaded = await uploadFileToStorage(file, item.folder);
+        mediaSettings = { ...mediaSettings, [kind]: uploaded };
+
+        await setDoc(doc(db, "yori_saif_settings", "media"), {
+          ...mediaSettings,
+          updatedAt: serverTimestamp()
+        });
+
+        qs(item.input).value = "";
+        applyMediaSettings();
+        showToast("تم الرفع والحفظ");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر رفع الملف");
       }
     }
 
-    function escapeHtml(value){
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    async function saveLoveVideoAdmin(){
+      if(!requirePerm("media")) return;
+
+      const id = qs("videoEditId").value || `v_${Date.now()}`;
+      const title = qs("videoTitleAdmin").value.trim();
+      const note = qs("videoNoteAdmin").value.trim();
+      const file = qs("loveVideoFileAdmin").files[0];
+
+      if(!title){
+        showToast("اكتب عنوان الفيديو");
+        return;
+      }
+
+      const existing = loveVideos.find(v => v.id === id);
+      let video = existing?.video || null;
+
+      if(file){
+        showToast("جاري رفع الفيديو...");
+        if(video?.path) await safeDeleteStorage(video.path);
+        video = await uploadFileToStorage(file, "love_videos");
+      }
+
+      if(!video?.url){
+        showToast("اختر فيديو من الألبوم");
+        return;
+      }
+
+      const payload = {
+        id,
+        title,
+        note,
+        video,
+        order: existing?.order || loveVideos.length + 1,
+        updatedAt: serverTimestamp()
+      };
+
+      try{
+        await setDoc(doc(db, "yori_saif_love_videos", id), payload);
+        clearVideoForm();
+        showToast("تم حفظ الفيديو");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حفظ الفيديو");
+      }
+    }
+
+    function clearVideoForm(){
+      qs("videoEditId").value = "";
+      qs("videoTitleAdmin").value = "";
+      qs("videoNoteAdmin").value = "";
+      qs("loveVideoFileAdmin").value = "";
+      qs("currentLoveVideoInfo").textContent = "عند التعديل يمكنك تغيير النص بدون اختيار فيديو جديد.";
+    }
+
+    function editVideoAdmin(id){
+      const v = loveVideos.find(x => x.id === id);
+      if(!v) return;
+      qs("videoEditId").value = v.id;
+      qs("videoTitleAdmin").value = v.title || "";
+      qs("videoNoteAdmin").value = v.note || "";
+      qs("currentLoveVideoInfo").textContent = v.video?.name ? `الفيديو الحالي: ${v.video.name}` : "لا يوجد فيديو";
+      switchAdminTab("media");
+    }
+
+    async function deleteVideoAdmin(id){
+      if(!requirePerm("media")) return;
+      if(!confirm("أكيد تحذف الفيديو؟")) return;
+
+      const v = loveVideos.find(x => x.id === id);
+      try{
+        if(v?.video?.path) await safeDeleteStorage(v.video.path);
+        await deleteDoc(doc(db, "yori_saif_love_videos", id));
+        showToast("تم حذف الفيديو");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حذف الفيديو");
+      }
+    }
+
+    async function saveQuestionAdmin(){
+      if(!requirePerm("questions")) return;
+
+      const id = qs("questionEditId").value || `q_${Date.now()}`;
+      const text = qs("questionTextAdmin").value.trim();
+
+      if(!text){
+        showToast("اكتب السؤال");
+        return;
+      }
+
+      const existing = questions.find(q => q.id === id);
+      const payload = {
+        id,
+        text,
+        order: existing?.order || questions.length + 1,
+        updatedAt: serverTimestamp()
+      };
+
+      try{
+        await setDoc(doc(db, "yori_saif_questions", id), payload);
+        clearQuestionForm();
+        showToast("تم حفظ السؤال");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حفظ السؤال");
+      }
+    }
+
+    function clearQuestionForm(){
+      qs("questionEditId").value = "";
+      qs("questionTextAdmin").value = "";
+    }
+
+    function editQuestionAdmin(id){
+      const q = questions.find(x => x.id === id);
+      if(!q) return;
+      qs("questionEditId").value = q.id;
+      qs("questionTextAdmin").value = q.text;
+      switchAdminTab("questions");
+    }
+
+    async function deleteQuestionAdmin(id){
+      if(!requirePerm("questions")) return;
+      if(!confirm("أكيد تحذف السؤال؟")) return;
+
+      try{
+        await deleteDoc(doc(db, "yori_saif_questions", id));
+        showToast("تم حذف السؤال");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حذف السؤال");
+      }
+    }
+
+    function renderAdminQuestions(){
+      if(!qs("adminQuestionsList")) return;
+      const list = qs("adminQuestionsList");
+      list.innerHTML = "";
+
+      sortedQuestions().forEach(q => {
+        const div = document.createElement("div");
+        div.className = "adminItem";
+        div.innerHTML = `
+          <h4>سؤال رقم ${q.order || ""}</h4>
+          <p>${escapeHtml(q.text)}</p>
+          <div class="adminActions">
+            <button class="btnSecondary" onclick="editQuestionAdmin('${escapeAttr(q.id)}')">تعديل</button>
+            <button class="dangerBtn" onclick="deleteQuestionAdmin('${escapeAttr(q.id)}')">حذف</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function renderAdminVideos(){
+      if(!qs("adminVideosList")) return;
+      const list = qs("adminVideosList");
+      list.innerHTML = "";
+
+      if(!loveVideos.length){
+        list.innerHTML = `<div class="adminItem"><p>لا توجد فيديوهات.</p></div>`;
+        return;
+      }
+
+      loveVideos
+        .slice()
+        .sort((a,b) => (a.order || 0) - (b.order || 0))
+        .forEach(v => {
+          const div = document.createElement("div");
+          div.className = "adminItem";
+          div.innerHTML = `
+            <h4>${escapeHtml(v.title || "فيديو")}</h4>
+            <p>${escapeHtml(v.note || "")}</p>
+            <p class="miniLine">${escapeHtml(v.video?.name || "")}</p>
+            <video controls playsinline preload="metadata" src="${escapeAttr(v.video?.url || "")}" style="max-height:220px;object-fit:contain"></video>
+            <div class="adminActions">
+              <button class="btnSecondary" onclick="editVideoAdmin('${escapeAttr(v.id)}')">تعديل</button>
+              <button class="dangerBtn" onclick="deleteVideoAdmin('${escapeAttr(v.id)}')">حذف</button>
+            </div>
+          `;
+          list.appendChild(div);
+        });
+    }
+
+    function renderAdminAnswers(){
+      if(!qs("adminAnswersList")) return;
+      const list = qs("adminAnswersList");
+      list.innerHTML = "";
+
+      const entries = [];
+      Object.values(answersByQuestion).forEach(bucket => Object.values(bucket).forEach(ans => entries.push(ans)));
+      entries.sort((a,b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+
+      if(!entries.length){
+        list.innerHTML = `<div class="adminItem"><p>ما فيه إجابات بعد.</p></div>`;
+        return;
+      }
+
+      entries.forEach(ans => {
+        const div = document.createElement("div");
+        div.className = "adminItem";
+        div.innerHTML = `
+          <h4>${escapeHtml(ans.name || ans.role || "بدون اسم")} — ${escapeHtml(ans.role || "")}</h4>
+          <p><b>السؤال:</b> ${escapeHtml(ans.questionText || "")}</p>
+          <p><b>الإجابة:</b> ${escapeHtml(ans.answer || "")}</p>
+          <p class="miniLine">${escapeHtml(ans.createdAtText || "")}</p>
+          <div class="adminActions">
+            <button class="dangerBtn" onclick="deleteAnswerAdmin('${escapeAttr(ans.questionId)}','${escapeAttr(ans.roleKey)}')">حذف الإجابة</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function renderAdminLoveChoices(){
+      if(!qs("adminLoveChoicesList")) return;
+      const list = qs("adminLoveChoicesList");
+      list.innerHTML = "";
+
+      if(!loveChoices.length){
+        list.innerHTML = `<div class="adminItem"><p>لا توجد اختيارات بعد.</p></div>`;
+        return;
+      }
+
+      loveChoices
+        .slice()
+        .sort((a,b) => (b.createdAtMs || 0) - (a.createdAtMs || 0))
+        .forEach(item => {
+          const div = document.createElement("div");
+          div.className = "adminItem";
+          div.innerHTML = `
+            <h4>${escapeHtml(item.answer || "")}</h4>
+            <p>${escapeHtml(item.name || "بدون اسم")} — ${escapeHtml(item.role || "")}</p>
+            <p class="miniLine">${escapeHtml(item.createdAtText || "")}</p>
+            <div class="adminActions">
+              <button class="dangerBtn" onclick="deleteLoveChoiceAdmin('${escapeAttr(item.id)}')">حذف</button>
+            </div>
+          `;
+          list.appendChild(div);
+        });
+    }
+
+    async function deleteAnswerAdmin(questionId, roleKey){
+      if(!requirePerm("answers")) return;
+      if(!confirm("أكيد تحذف الإجابة؟")) return;
+      try{
+        await deleteDoc(doc(db, "yori_saif_question_answers", `${questionId}_${roleKey}`));
+        showToast("تم حذف الإجابة");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حذف الإجابة");
+      }
+    }
+
+    async function deleteLoveChoiceAdmin(id){
+      if(!requirePerm("answers")) return;
+      if(!confirm("أكيد تحذف الاختيار؟")) return;
+      try{
+        await deleteDoc(doc(db, "yori_saif_love_choices", id));
+        showToast("تم حذف الاختيار");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حذف الاختيار");
+      }
+    }
+
+    async function deleteAllQuestionAnswers(){
+      if(!requirePerm("answers")) return;
+      if(!confirm("أكيد تمسح كل إجابات الأسئلة؟")) return;
+      try{
+        const snap = await getDocs(collection(db, "yori_saif_question_answers"));
+        const batch = writeBatch(db);
+        snap.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        showToast("تم مسح كل إجابات الأسئلة");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر المسح");
+      }
+    }
+
+    async function deleteAllLoveChoices(){
+      if(!requirePerm("answers")) return;
+      if(!confirm("أكيد تمسح كل اختيارات رضيت/ما رضيت؟")) return;
+      try{
+        const snap = await getDocs(collection(db, "yori_saif_love_choices"));
+        const batch = writeBatch(db);
+        snap.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        showToast("تم مسح الاختيارات");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر المسح");
+      }
+    }
+
+    function renderPermissionsGrid(){
+      const grid = qs("permissionsGrid");
+      if(!grid) return;
+      grid.innerHTML = "";
+      PERMISSIONS.forEach(p => {
+        const div = document.createElement("label");
+        div.className = "checkItem";
+        div.innerHTML = `<input type="checkbox" data-perm="${p.key}"> ${p.label}`;
+        grid.appendChild(div);
+      });
+    }
+
+    function getPermissionsFromForm(){
+      const p = {};
+      qs("permissionsGrid").querySelectorAll("input[type=checkbox]").forEach(ch => p[ch.dataset.perm] = ch.checked);
+      return p;
+    }
+
+    function setPermissionsForm(perms){
+      qs("permissionsGrid").querySelectorAll("input[type=checkbox]").forEach(ch => ch.checked = !!perms?.[ch.dataset.perm]);
+    }
+
+    async function saveAdminUser(){
+      if(!requirePerm("admins")) return;
+
+      const editId = qs("adminEditId").value;
+      const usernameText = qs("newAdminUsername").value.trim();
+      const id = editId || cleanId(usernameText);
+      const displayName = qs("newAdminDisplay").value.trim() || usernameText;
+      const password = qs("newAdminPassword").value;
+      const permissions = getPermissionsFromForm();
+
+      if(!id || !usernameText){
+        showToast("اكتب اسم المدير");
+        return;
+      }
+
+      const existing = admins.find(a => a.id === id);
+      if(!existing && !password){
+        showToast("اكتب كلمة مرور للمدير الجديد");
+        return;
+      }
+
+      const payload = {
+        username: id,
+        displayName,
+        root: existing?.root || false,
+        permissions: existing?.root ? allPermissions() : permissions,
+        updatedAt: serverTimestamp()
+      };
+
+      if(password) payload.passwordHash = await sha256(password);
+      else if(existing?.passwordHash) payload.passwordHash = existing.passwordHash;
+
+      try{
+        await setDoc(doc(db, "yori_saif_admins", id), payload, { merge:true });
+        clearAdminForm();
+        showToast("تم حفظ المدير");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حفظ المدير");
+      }
+    }
+
+    function editAdminUser(id){
+      const a = admins.find(x => x.id === id);
+      if(!a) return;
+      qs("adminEditId").value = a.id;
+      qs("newAdminUsername").value = a.username || a.id;
+      qs("newAdminDisplay").value = a.displayName || "";
+      qs("newAdminPassword").value = "";
+      setPermissionsForm(a.root ? allPermissions() : a.permissions);
+      switchAdminTab("admins");
+    }
+
+    async function deleteAdminUser(id){
+      if(!requirePerm("admins")) return;
+      if(id === DEFAULT_ROOT_USERNAME || admins.find(a => a.id === id)?.root){
+        showToast("ما تقدر تحذف المدير الأساسي");
+        return;
+      }
+      if(!confirm("أكيد تحذف المدير؟")) return;
+
+      try{
+        await deleteDoc(doc(db, "yori_saif_admins", id));
+        showToast("تم حذف المدير");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حذف المدير");
+      }
+    }
+
+    function clearAdminForm(){
+      qs("adminEditId").value = "";
+      qs("newAdminUsername").value = "";
+      qs("newAdminDisplay").value = "";
+      qs("newAdminPassword").value = "";
+      setPermissionsForm({});
+    }
+
+    function renderAdminUsers(){
+      if(!qs("adminUsersList")) return;
+      const list = qs("adminUsersList");
+      list.innerHTML = "";
+
+      if(!admins.length){
+        list.innerHTML = `<div class="adminItem"><p>لا يوجد مدراء ظاهرين بعد.</p></div>`;
+        return;
+      }
+
+      admins.forEach(a => {
+        const div = document.createElement("div");
+        div.className = "adminItem";
+        const perms = a.root ? "كل الصلاحيات" : PERMISSIONS.filter(p => a.permissions?.[p.key]).map(p => p.label).join("، ");
+        div.innerHTML = `
+          <h4>${escapeHtml(a.displayName || a.username || a.id)} ${a.root ? "👑" : ""}</h4>
+          <p><b>اسم الدخول:</b> ${escapeHtml(a.username || a.id)}</p>
+          <p><b>الصلاحيات:</b> ${escapeHtml(perms || "بدون صلاحيات")}</p>
+          <div class="adminActions">
+            <button class="btnSecondary" onclick="editAdminUser('${escapeAttr(a.id)}')">تعديل</button>
+            <button class="dangerBtn" onclick="deleteAdminUser('${escapeAttr(a.id)}')">حذف</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    async function uploadFileToStorage(file, folder){
+      if(!storage) throw new Error("Storage not ready");
+      const safeName = file.name.replace(/[^\w.\-\u0600-\u06FF]/g, "_");
+      const path = `${folder}/${Date.now()}_${safeName}`;
+      const ref = storageRef(storage, path);
+      await uploadBytes(ref, file, { contentType:file.type || "application/octet-stream" });
+      const url = await getDownloadURL(ref);
+      return {
+        url,
+        path,
+        name:file.name,
+        type:file.type || "application/octet-stream",
+        size:file.size,
+        uploadedAtText:new Date().toLocaleString("ar-SA")
+      };
+    }
+
+    async function safeDeleteStorage(path){
+      if(!path || !storage) return;
+      try{
+        await deleteObject(storageRef(storage, path));
+      }catch(error){
+        console.warn("delete storage ignored", error);
+      }
+    }
+
+    function subscribeAll(){
+      if(!db){
+        updateCloudStatus(false);
+        renderQuestions();
+        renderLoveVideos();
+        applySiteSettings();
+        applyMediaSettings();
+        return;
+      }
+
+      updateCloudStatus(true);
+
+      unsubscribers.forEach(fn => fn && fn());
+      unsubscribers = [];
+
+      unsubscribers.push(onSnapshot(doc(db, "yori_saif_settings", "site"), async (snap) => {
+        if(snap.exists()){
+          siteSettings = { ...DEFAULT_SITE, ...snap.data() };
+          applySiteSettings();
+        }else{
+          await setDoc(doc(db, "yori_saif_settings", "site"), { ...DEFAULT_SITE, updatedAt:serverTimestamp() });
+        }
+      }, err => {
+        console.error(err);
+        updateCloudStatus(false);
+      }));
+
+      unsubscribers.push(onSnapshot(doc(db, "yori_saif_settings", "media"), async (snap) => {
+        if(snap.exists()){
+          mediaSettings = { ...DEFAULT_MEDIA, ...snap.data() };
+          applyMediaSettings();
+        }else{
+          await setDoc(doc(db, "yori_saif_settings", "media"), { ...DEFAULT_MEDIA, updatedAt:serverTimestamp() });
+        }
+      }, err => {
+        console.error(err);
+        updateCloudStatus(false);
+      }));
+
+      unsubscribers.push(onSnapshot(collection(db, "yori_saif_questions"), async (snapshot) => {
+        if(snapshot.empty){
+          await seedQuestionsOnce();
+          return;
+        }
+        questions = snapshot.docs.map(d => ({ id:d.id, ...d.data() }));
+        renderQuestions();
+        renderAdminQuestions();
+        renderStats();
+      }, err => console.error(err)));
+
+      unsubscribers.push(onSnapshot(collection(db, "yori_saif_love_videos"), (snapshot) => {
+        loveVideos = snapshot.docs.map(d => ({ id:d.id, ...d.data() }));
+        renderLoveVideos();
+        renderAdminVideos();
+        renderStats();
+      }, err => console.error(err)));
+
+      unsubscribers.push(onSnapshot(collection(db, "yori_saif_question_answers"), (snapshot) => {
+        answersByQuestion = {};
+        snapshot.docs.forEach(d => {
+          const ans = { id:d.id, ...d.data() };
+          answersByQuestion[ans.questionId] = answersByQuestion[ans.questionId] || {};
+          answersByQuestion[ans.questionId][ans.roleKey || normalizeRole(ans.role)] = ans;
+        });
+        updateAnswersUi();
+        renderAdminAnswers();
+        renderStats();
+      }, err => console.error(err)));
+
+      unsubscribers.push(onSnapshot(collection(db, "yori_saif_love_choices"), (snapshot) => {
+        loveChoices = snapshot.docs.map(d => ({ id:d.id, ...d.data() }));
+        renderAdminLoveChoices();
+      }, err => console.error(err)));
+
+      unsubscribers.push(onSnapshot(collection(db, "yori_saif_admins"), async (snapshot) => {
+        admins = snapshot.docs.map(d => ({ id:d.id, ...d.data() }));
+        if(!admins.some(a => a.id === DEFAULT_ROOT_USERNAME)) await ensureRootAdmin();
+        renderAdminUsers();
+        renderStats();
+      }, err => console.error(err)));
+    }
+
+    async function seedQuestionsOnce(){
+      if(!db) return;
+      try{
+        const flag = await getDoc(doc(db, "yori_saif_private", "seed_questions_v4"));
+        if(flag.exists()) return;
+
+        const batch = writeBatch(db);
+        DEFAULT_QUESTIONS.forEach(q => {
+          batch.set(doc(db, "yori_saif_questions", q.id), { ...q, updatedAt:serverTimestamp() });
+        });
+        batch.set(doc(db, "yori_saif_private", "seed_questions_v4"), { done:true, at:serverTimestamp() });
+        await batch.commit();
+      }catch(error){
+        console.error("seed questions error", error);
+      }
+    }
+
+    function updateCloudStatus(ok){
+      const status = qs("cloudStatus");
+      const adminStatus = qs("adminCloudStatus");
+      if(ok){
+        status.textContent = "السحابة مفعلة";
+        status.classList.add("ok");
+        adminStatus.textContent = "السحابة مفعلة";
+        adminStatus.classList.add("ok");
+      }else{
+        status.textContent = "السحابة غير مفعلة أو يوجد خطأ";
+        status.classList.remove("ok");
+        adminStatus.textContent = "السحابة غير مفعلة أو يوجد خطأ";
+        adminStatus.classList.remove("ok");
+      }
     }
 
     function makeConfetti(){
@@ -1234,72 +2627,6 @@
       setTimeout(() => area.innerHTML = "", 3500);
     }
 
-    function renderQuestions(){
-      const list = qs("questionList");
-      list.innerHTML = "";
-      QUESTIONS.forEach((q, i) => {
-        const btn = document.createElement("button");
-        btn.className = "qMini" + (i === currentQuestion ? " active" : "");
-        btn.textContent = `${i+1}. ${q}`;
-        btn.onclick = () => setQuestion(i);
-        list.appendChild(btn);
-      });
-      updateQuestionCard();
-    }
-
-    function setQuestion(i){
-      currentQuestion = (i + QUESTIONS.length) % QUESTIONS.length;
-      renderQuestions();
-    }
-
-    function updateQuestionCard(){
-      qs("questionNumber").textContent = `سؤال ${currentQuestion + 1} من ${QUESTIONS.length}`;
-      qs("questionText").textContent = QUESTIONS[currentQuestion];
-    }
-
-    function nextQuestion(){ setQuestion(currentQuestion + 1); }
-    function prevQuestion(){ setQuestion(currentQuestion - 1); }
-    function randomQuestion(){ setQuestion(Math.floor(Math.random() * QUESTIONS.length)); }
-
-    async function captureQuestion(){
-      const card = qs("snapCard");
-
-      if(!window.html2canvas){
-        showToast("انتظر تحميل أداة التصوير ثم جرّب مرة ثانية");
-        return;
-      }
-
-      showToast("جاري تجهيز الصورة...");
-      const canvas = await html2canvas(card, {
-        backgroundColor: null,
-        scale: Math.min(3, window.devicePixelRatio || 2),
-        useCORS: true
-      });
-
-      canvas.toBlob(async (blob) => {
-        const file = new File([blob], `سؤال-حب-${currentQuestion+1}.png`, { type:"image/png" });
-
-        if(navigator.canShare && navigator.canShare({ files:[file] })){
-          try{
-            await navigator.share({
-              files:[file],
-              title:"سؤال حب ليوري وسيف",
-              text:"جاوبوا السؤال بالسناب ❤️"
-            });
-            showToast("افتح السناب واختار الصورة ❤️");
-            return;
-          }catch(e){}
-        }
-
-        const link = document.createElement("a");
-        link.download = `سؤال-حب-${currentQuestion+1}.png`;
-        link.href = URL.createObjectURL(blob);
-        link.click();
-        URL.revokeObjectURL(link.href);
-        showToast("تم حفظ صورة السؤال، ارسلها بالسناب ❤️");
-      }, "image/png");
-    }
-
     function makeHearts(){
       const area = qs("hearts");
       for(let i=0;i<22;i++){
@@ -1314,19 +2641,28 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      setMedia();
-      renderQuestions();
-      makeHearts();
+    function escapeHtml(value){
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-      const status = qs("cloudStatus");
-      if(db){
-        status.textContent = "السحابة مفعلة";
-        status.classList.add("ok");
-      }else{
-        status.textContent = "السحابة غير مفعلة حتى تضيف Firebase config";
-        status.classList.remove("ok");
-      }
+    function escapeAttr(value){
+      return escapeHtml(value).replaceAll("\n"," ");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      makeHearts();
+      renderPermissionsGrid();
+      loadProfile();
+      applySiteSettings();
+      applyMediaSettings();
+      renderQuestions();
+      renderLoveVideos();
+      subscribeAll();
     });
   </script>
 </body>
