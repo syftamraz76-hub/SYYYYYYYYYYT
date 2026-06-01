@@ -1001,6 +1001,7 @@
           <div class="uploadGlobalText" id="uploadGlobalText">جاري الرفع...</div>
           <div class="uploadGlobalBar"><span id="uploadGlobalFill"></span></div>
         </div>
+        <div class="currentFileBox hidden" id="uploadErrorBox"></div>
 
         <div class="adminTabs" id="adminTabs"></div>
 
@@ -1050,6 +1051,19 @@
 
         <div class="adminPanel" id="mediaPanel">
           <h3>إدارة الفيديوهات والأغاني من الألبوم</h3>
+
+          <div class="adminForm">
+            <h4>إعداد Cloudinary المجاني</h4>
+            <p style="color:var(--muted);font-weight:800;line-height:1.8">
+              لأن Firebase Storage يحتاج دفع، الرفع هنا بيكون عبر Cloudinary المجاني. اكتب Cloud name و Upload preset مرة واحدة فقط.
+            </p>
+            <div class="adminGrid">
+              <input id="cloudinaryCloudNameInput" placeholder="Cloud name مثال: demo123" />
+              <input id="cloudinaryPresetInput" placeholder="Unsigned upload preset" />
+            </div>
+            <button onclick="saveCloudinarySettings()">حفظ إعداد Cloudinary</button>
+            <div class="currentFileBox" id="cloudinaryStatusBox">لم يتم إعداد Cloudinary بعد</div>
+          </div>
 
           <div class="adminForm">
             <h4>فيديو العيد</h4>
@@ -1354,13 +1368,6 @@
       getDocs,
       writeBatch
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-    import {
-      getStorage,
-      ref as storageRef,
-      uploadBytesResumable,
-      getDownloadURL,
-      deleteObject
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
     const FIREBASE_CONFIG = {
       apiKey: "AIzaSyAiifC3bER_VgmbKW0liUj15MK9ddX1pL0",
@@ -1407,6 +1414,11 @@
       loveMedia: { url:"love.mp3", name:"love.mp3", type:"audio/mpeg", path:"" }
     };
 
+    const DEFAULT_CLOUDINARY = {
+      cloudName: "",
+      uploadPreset: ""
+    };
+
     const DEFAULT_QUESTIONS = [
       "وش أكثر لحظة حسّيتي فيها إني أحبك بصدق؟",
       "وش الشيء اللي تبغينه مني لما تزعلين؟",
@@ -1432,12 +1444,11 @@
 
     let app = null;
     let db = null;
-    let storage = null;
+    let cloudinarySettings = { cloudName:"", uploadPreset:"" };
 
     try{
       app = initializeApp(FIREBASE_CONFIG);
       db = getFirestore(app);
-      storage = getStorage(app);
     }catch(error){
       console.error("Firebase init error:", error);
     }
@@ -1471,6 +1482,7 @@
     window.loadMyAnswerIntoBox = loadMyAnswerIntoBox;
     window.saveSiteSettings = saveSiteSettings;
     window.uploadMainMedia = uploadMainMedia;
+    window.saveCloudinarySettings = saveCloudinarySettings;
     window.saveLoveVideoAdmin = saveLoveVideoAdmin;
     window.clearVideoForm = clearVideoForm;
     window.editVideoAdmin = editVideoAdmin;
@@ -1991,6 +2003,7 @@
       fillSiteForm();
       renderMainMediaAdminInfo();
       renderPermissionsGrid();
+      renderCloudinarySettings();
     }
 
     function TrueLike(){ return true; }
@@ -2045,6 +2058,44 @@
           showToast("تعذر حفظ الموقع");
         }
       }
+    }
+
+
+    async function saveCloudinarySettings(){
+      if(!requirePerm("media")) return;
+
+      const cloudName = qs("cloudinaryCloudNameInput").value.trim();
+      const uploadPreset = qs("cloudinaryPresetInput").value.trim();
+
+      if(!cloudName || !uploadPreset){
+        showToast("اكتب Cloud name و Upload preset");
+        return;
+      }
+
+      cloudinarySettings = { cloudName, uploadPreset };
+
+      try{
+        await setDoc(doc(db, "yori_saif_settings", "cloudinary"), {
+          cloudName,
+          uploadPreset,
+          updatedAt: serverTimestamp()
+        });
+        renderCloudinarySettings();
+        showToast("تم حفظ إعداد Cloudinary");
+      }catch(error){
+        console.error(error);
+        showToast("تعذر حفظ إعداد Cloudinary");
+      }
+    }
+
+    function renderCloudinarySettings(){
+      if(!qs("cloudinaryCloudNameInput")) return;
+      qs("cloudinaryCloudNameInput").value = cloudinarySettings.cloudName || "";
+      qs("cloudinaryPresetInput").value = cloudinarySettings.uploadPreset || "";
+      const ready = cloudinarySettings.cloudName && cloudinarySettings.uploadPreset;
+      qs("cloudinaryStatusBox").textContent = ready
+        ? `Cloudinary جاهز: ${cloudinarySettings.cloudName}`
+        : "لم يتم إعداد Cloudinary بعد";
     }
 
     async function uploadMainMedia(kind){
@@ -2516,41 +2567,104 @@
     }
 
     async function uploadFileToStorage(file, folder){
-      if(!storage) throw new Error("Storage not ready");
+      const cloudName = String(cloudinarySettings.cloudName || "").trim();
+      const uploadPreset = String(cloudinarySettings.uploadPreset || "").trim();
 
-      const safeName = file.name.replace(/[^\w.\-\u0600-\u06FF]/g, "_");
-      const path = `${folder}/${Date.now()}_${safeName}`;
-      const ref = storageRef(storage, path);
+      if(!cloudName || !uploadPreset){
+        showUploadError("لازم تضبط Cloudinary أول: اكتب Cloud name و Unsigned upload preset من تبويب الفيديوهات والأغاني ثم احفظ.");
+        throw new Error("Cloudinary not configured");
+      }
 
-      setUploadProgress(0, `بدء رفع ${file.name}...`);
+      clearUploadError();
 
-      const task = uploadBytesResumable(ref, file, {
-        contentType:file.type || "application/octet-stream",
-        cacheControl:"public,max-age=31536000"
+      if(file.size > 100 * 1024 * 1024){
+        showUploadError("تنبيه: الملف كبير. Cloudinary المجاني قد يقبل أو يرفض حسب حدود حسابك. جرّب فيديو قصير أقل من 50MB للتجربة.");
+      }
+
+      setUploadProgress(0, `بدء رفع ${file.name} إلى Cloudinary...`);
+
+      const url = `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/auto/upload`;
+      const form = new FormData();
+      form.append("file", file);
+      form.append("upload_preset", uploadPreset);
+      form.append("folder", `yori_saif/${folder}`);
+
+      const response = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        let firstProgressSeen = false;
+
+        const timeoutId = setTimeout(() => {
+          if(!firstProgressSeen){
+            showUploadError("الرفع باقي 0%. غالبًا Cloud name أو upload preset غلط، أو الـ preset مو Unsigned، أو المتصفح حاجب الطلب.");
+          }
+        }, 12000);
+
+        xhr.upload.onprogress = (event) => {
+          firstProgressSeen = true;
+          if(event.lengthComputable){
+            const percent = Math.round((event.loaded / event.total) * 100);
+            const mbDone = (event.loaded / 1024 / 1024).toFixed(1);
+            const mbTotal = (event.total / 1024 / 1024).toFixed(1);
+            setUploadProgress(percent, `جاري رفع ${file.name}: ${percent}% — ${mbDone}MB من ${mbTotal}MB`);
+          }else{
+            setUploadProgress(5, `جاري رفع ${file.name}...`);
+          }
+        };
+
+        xhr.onload = () => {
+          clearTimeout(timeoutId);
+          let data = null;
+          try{ data = JSON.parse(xhr.responseText || "{}"); }catch(e){}
+
+          if(xhr.status >= 200 && xhr.status < 300 && data?.secure_url){
+            resolve(data);
+          }else{
+            const msg = data?.error?.message || xhr.responseText || `HTTP ${xhr.status}`;
+            showUploadError("فشل رفع Cloudinary: " + msg);
+            reject(new Error(msg));
+          }
+        };
+
+        xhr.onerror = () => {
+          clearTimeout(timeoutId);
+          showUploadError("فشل الاتصال بـ Cloudinary. تأكد من النت ومن Cloud name و preset.");
+          reject(new Error("Cloudinary network error"));
+        };
+
+        xhr.open("POST", url);
+        xhr.send(form);
       });
 
-      await new Promise((resolve, reject) => {
-        task.on("state_changed", (snapshot) => {
-          const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          const mbDone = (snapshot.bytesTransferred / 1024 / 1024).toFixed(1);
-          const mbTotal = (snapshot.totalBytes / 1024 / 1024).toFixed(1);
-          setUploadProgress(percent, `جاري رفع ${file.name}: ${percent}% — ${mbDone}MB من ${mbTotal}MB`);
-        }, reject, resolve);
-      });
-
-      const url = await getDownloadURL(ref);
       setUploadProgress(100, "تم الرفع، جاري حفظ البيانات...");
-
       setTimeout(() => hideUploadProgress(), 1400);
 
       return {
-        url,
-        path,
-        name:file.name,
-        type:file.type || "application/octet-stream",
-        size:file.size,
+        url: response.secure_url,
+        path: response.public_id || "",
+        name: file.name,
+        type: file.type || (response.resource_type === "video" ? "video/mp4" : "application/octet-stream"),
+        size: file.size,
+        cloudinaryPublicId: response.public_id || "",
+        resourceType: response.resource_type || "",
         uploadedAtText:new Date().toLocaleString("ar-SA")
       };
+    }
+
+    async function safeDeleteStorage(path){
+      // في Cloudinary الحذف الحقيقي يحتاج API secret وسيرفر آمن.
+      // هنا نحذف العنصر من الموقع/Firestore فقط، والملف يبقى في Cloudinary.
+      return;
+    }
+
+    function firebaseStorageErrorMessage(error){
+      const code = error?.code || "";
+      if(code.includes("unauthorized")) return "ممنوع الرفع. المشكلة من قواعد Storage.";
+      if(code.includes("quota-exceeded")) return "المساحة أو الباندويث خلص. راجع Billing/Usage.";
+      if(code.includes("canceled")) return "تم إلغاء الرفع.";
+      if(code.includes("retry-limit-exceeded")) return "انتهت محاولات الرفع. النت ضعيف أو Firebase حظر الطلب.";
+      if(code.includes("storage/unknown")) return "خطأ غير معروف من Storage. غالبًا Storage غير مفعل أو يحتاج Upgrade.";
+      if(String(error?.message || "").includes("CORS")) return "مشكلة CORS أو المتصفح حاجب الطلب.";
+      return error?.message || "تعذر الرفع. افتح Console لمعرفة السبب.";
     }
 
     function setUploadProgress(percent, text){
@@ -2573,15 +2687,19 @@
       fill.style.width = "0%";
     }
 
-    async function safeDeleteStorage(path){
-      if(!path || !storage) return;
-      try{
-        await deleteObject(storageRef(storage, path));
-      }catch(error){
-        console.warn("delete storage ignored", error);
-      }
+    function showUploadError(message){
+      const box = qs("uploadErrorBox");
+      if(!box) return;
+      box.classList.remove("hidden");
+      box.innerHTML = `<b>مشكلة الرفع:</b><br>${escapeHtml(message)}`;
     }
 
+    function clearUploadError(){
+      const box = qs("uploadErrorBox");
+      if(!box) return;
+      box.classList.add("hidden");
+      box.textContent = "";
+    }
     function subscribeAll(){
       if(!db){
         updateCloudStatus(false);
@@ -2616,6 +2734,19 @@
         }else{
           await setDoc(doc(db, "yori_saif_settings", "media"), { ...DEFAULT_MEDIA, updatedAt:serverTimestamp() });
         }
+      }, err => {
+        console.error(err);
+        updateCloudStatus(false);
+      }));
+
+      unsubscribers.push(onSnapshot(doc(db, "yori_saif_settings", "cloudinary"), async (snap) => {
+        if(snap.exists()){
+          cloudinarySettings = { ...DEFAULT_CLOUDINARY, ...snap.data() };
+        }else{
+          cloudinarySettings = { ...DEFAULT_CLOUDINARY };
+          await setDoc(doc(db, "yori_saif_settings", "cloudinary"), { ...DEFAULT_CLOUDINARY, updatedAt:serverTimestamp() });
+        }
+        renderCloudinarySettings();
       }, err => {
         console.error(err);
         updateCloudStatus(false);
